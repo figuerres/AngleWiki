@@ -20,8 +20,8 @@ export class PageComponent implements OnInit {
    private wikiPagesService:  WikiPagesService
    ) { }
 
-   public textData = `## Markdown content data`;
-
+   public textData = '## Markdown content data';
+   public Title = 'Markdown content data';
 
   ngOnInit( ) {
 
@@ -31,6 +31,7 @@ console.log(' pageId = ' , id);
       console.log(' page = ' ,page);
       console.log(' content = ' ,page.pageContent);
       this.textData = page.pageContent;
+      this.Title = page.title;
     });
 
   }
