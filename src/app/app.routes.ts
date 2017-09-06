@@ -18,27 +18,27 @@ export const appRoutes: Routes = [
                 component: HomeComponent
             },
             {
-                path: 'Categories',
+                path: 'categories',
                 component: CategoriesComponent
             },
             {
-                path: 'Pages',
+                path: 'pages',
                 component: PagesComponent
             },
             {
-                path: 'Page/:id/:title',
+                path: 'page/:id/:title',
                 component: PageComponent
             },
             {
-                path: 'NewPage',
+                path: 'newpage',
                 component: NewPageComponent
             },
             {
-                path: 'FileManager',
+                path: 'filemanager',
                 component: FileManagerComponent
             },
             {
-                path: 'Settings',
+                path: 'settings',
                 component: SettingsComponent
             },
             {

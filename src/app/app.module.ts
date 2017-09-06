@@ -15,7 +15,7 @@ import { TabsModule } from 'ngx-bootstrap';
 import { MarkdownModule } from 'angular2-markdown';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
-
+import { WikiPagesService } from './services/wiki-pages.service';
 
 import { appRoutes } from './app.routes';
 
@@ -66,7 +66,9 @@ import { PageComponent } from './page/page.component';
     MarkdownModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [
+    WikiPagesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
