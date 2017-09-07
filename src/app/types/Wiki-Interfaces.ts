@@ -39,6 +39,16 @@
     }
 
     export interface IPageSummary {
+        wikiId:number;
+        id: number;
+        title: string;
+        wiki:{
+          title: string;
+        }
+    }
+
+
+    export interface IWikiName {
         id: number;
         title: string;
     }

@@ -30,6 +30,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { NewPageComponent } from './new-page/new-page.component';
 import { HomeComponent } from './home/home.component';
 import { PageComponent } from './page/page.component';
+import { WikiComponent } from './wiki/wiki.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PageComponent } from './page/page.component';
     SettingsComponent,
     NewPageComponent,
     HomeComponent,
-    PageComponent
+    PageComponent,
+    WikiComponent
   ],
   imports: [
 

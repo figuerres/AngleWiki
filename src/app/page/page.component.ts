@@ -24,8 +24,8 @@ export class PageComponent implements OnInit {
    public Title = 'Markdown content data';
 
   ngOnInit( ) {
-
-    let id = +this.route.snapshot.paramMap.get('id');
+console.log("route param map ",  this.route.snapshot.paramMap );
+    let id = +this.route.snapshot.paramMap.get('pageId');
 console.log(' pageId = ' , id);
     this.wikiPagesService.getWikiPage(id).subscribe(page =>{
       console.log(' page = ' ,page);

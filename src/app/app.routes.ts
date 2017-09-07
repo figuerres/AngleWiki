@@ -11,6 +11,7 @@ import { PagesComponent } from './pages/pages.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NewPageComponent } from './new-page/new-page.component';
 import { PageComponent } from './page/page.component';
+import { WikiComponent } from './wiki/wiki.component';
 
 export const appRoutes: Routes = [
             {
@@ -22,13 +23,17 @@ export const appRoutes: Routes = [
                 component: CategoriesComponent
             },
             {
-                path: 'pages',
-                component: PagesComponent
+                path: 'wiki',
+                children: [
+                    {path: "", pathMatch: 'full',component: WikiComponent},
+                    {path: ":wikiId/:wikiTitle",  component: WikiComponent },
+                    {path: "page/:pageId/pageTitle",  component: PageComponent }
+                ]
             },
-            {
-                path: 'page/:id/:title',
-                component: PageComponent
-            },
+            // {
+            //     path: 'page/:id/:title',
+            //     component: PageComponent
+            // },
             {
                 path: 'newpage',
                 component: NewPageComponent
