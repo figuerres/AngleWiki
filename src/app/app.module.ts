@@ -16,6 +16,7 @@ import { MarkdownModule } from 'angular2-markdown';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
 import { WikiPagesService } from './services/wiki-pages.service';
+import { WikiFilesService } from './services/wiki-files.service';
 
 import { appRoutes } from './app.routes';
 
@@ -73,7 +74,8 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    WikiPagesService
+    WikiPagesService,
+    WikiFilesService
   ],
   bootstrap: [AppComponent]
 })

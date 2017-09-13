@@ -1,5 +1,28 @@
-<p>
-  new-page works!
-</p>
-<textarea [(ngModel)]="textData"></textarea>
-<markdown [data]="textData"></markdown>
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+          <div  class="panel panel-info">
+              <div class="panel-heading">New Page:</div>
+              <div class="panel-body">
+                title:<br>
+                tags:<br>
+          <textarea rows="20"
+           [(ngModel)]="textData"
+          ></textarea>
+         </div>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+          <div  class="panel panel-info">
+              <div class="panel-heading">Preview:</div>
+              <div class="panel-body">
+          <markdown [data]="textData"></markdown>
+              </div>
+            </div>
+      </div>
+
+    </div>
+  </div>
+

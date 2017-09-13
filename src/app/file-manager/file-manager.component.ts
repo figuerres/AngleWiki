@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
 
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/fileupload/';
 @Component({
   selector: 'app-file-manager',
   templateUrl: './file-manager.component.html',
@@ -10,7 +10,7 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 })
 export class FileManagerComponent implements OnInit {
 
-  public uploader: FileUploader = new FileUploader({url: URL});
+  public uploader: FileUploader = new FileUploader({url: uploadURL});
   public hasBaseDropZoneOver: boolean = false;
   public hasAnotherDropZoneOver: boolean = false;
 
