@@ -22,17 +22,29 @@ export class PageComponent implements OnInit {
 
    public textData = '## Markdown content data';
    public Title = 'Markdown content data';
+   public pageList: IPageSummary[];
 
   ngOnInit( ) {
-console.log("route param map ",  this.route.snapshot.paramMap );
-    let id = +this.route.snapshot.paramMap.get('pageId');
-console.log(' pageId = ' , id);
-    this.wikiPagesService.getWikiPage(id).subscribe(page =>{
-      console.log(' page = ' ,page);
-      console.log(' content = ' ,page.pageContent);
-      this.textData = page.pageContent;
-      this.Title = page.title;
+
+
+//console.log("route param map ",  this.route.snapshot.paramMap );
+    //let id = +this.route.snapshot.paramMap.get('id');
+//console.log(' pageId = ' , id);
+
+    this.route.params.forEach(params =>{
+      let id = params["id"];
+      this.wikiPagesService.getWikiPage(id).subscribe(page =>{
+        console.log(' page = ' ,page);
+        console.log(' content = ' ,page.pageContent);
+        this.textData = page.pageContent;
+        this.Title = page.title;
+      this.wikiPagesService.getWikiPageList(page.wikiId).subscribe(wPages =>{
+          console.log(' wiki pages = ' ,wPages);
+          this.pageList = wPages;
+        });
+      });
     });
+
 
   }
 

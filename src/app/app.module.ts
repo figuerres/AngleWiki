@@ -30,7 +30,10 @@ import { SettingsComponent } from './settings/settings.component';
 import { NewPageComponent } from './new-page/new-page.component';
 import { HomeComponent } from './home/home.component';
 import { PageComponent } from './page/page.component';
-import { WikiComponent } from './wiki/wiki.component';
+//  import { WikiComponent } from './wiki/wiki.component';
+
+import { WikiListComponent } from './wiki-list/wiki-list.component';
+import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,8 @@ import { WikiComponent } from './wiki/wiki.component';
     NewPageComponent,
     HomeComponent,
     PageComponent,
-    WikiComponent
+    WikiListComponent,
+    WikiTocComponent
   ],
   imports: [
 

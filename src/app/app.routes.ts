@@ -11,6 +11,8 @@ import { PagesComponent } from './pages/pages.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NewPageComponent } from './new-page/new-page.component';
 import { PageComponent } from './page/page.component';
+import { WikiListComponent } from './wiki-list/wiki-list.component';
+import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 import { WikiComponent } from './wiki/wiki.component';
 
 export const appRoutes: Routes = [
@@ -22,18 +24,27 @@ export const appRoutes: Routes = [
                 path: 'categories',
                 component: CategoriesComponent
             },
+            // {
+            //     path: 'wiki',
+            //     children: [
+            //         {path: "", pathMatch: 'full',component: WikiComponent},
+            //         {path: ":wikiId/:wikiTitle",  component: WikiComponent },
+            //         {path: "page/:pageId/pageTitle",  component: PageComponent }
+            //     ]
+            // },
             {
                 path: 'wiki',
-                children: [
-                    {path: "", pathMatch: 'full',component: WikiComponent},
-                    {path: ":wikiId/:wikiTitle",  component: WikiComponent },
-                    {path: "page/:pageId/pageTitle",  component: PageComponent }
-                ]
+                   component: WikiListComponent
             },
-            // {
-            //     path: 'page/:id/:title',
-            //     component: PageComponent
-            // },
+            {
+                path: 'wiki/:wikiId/:wikiTitle', 
+                component: WikiTocComponent  
+            },
+            {
+                path: 'wiki/page/:id/:title',
+                component: PageComponent
+            },
+
             {
                 path: 'newpage',
                 component: NewPageComponent

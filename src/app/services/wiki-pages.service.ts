@@ -28,8 +28,6 @@ public  getWikiNameList(): Observable<IWikiName[]> {
     .catch(this.handleError);
 }
 
-
-
 public  getWiki(wikiId: number): Observable<IWiki> { 
       let url = this.serviceBase + 'Wikis(' + wikiId +')' ; 
         return this.http.get(url) 
