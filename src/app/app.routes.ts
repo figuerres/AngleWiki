@@ -24,14 +24,6 @@ export const appRoutes: Routes = [
                 path: 'categories',
                 component: CategoriesComponent
             },
-            // {
-            //     path: 'wiki',
-            //     children: [
-            //         {path: "", pathMatch: 'full',component: WikiComponent},
-            //         {path: ":wikiId/:wikiTitle",  component: WikiComponent },
-            //         {path: "page/:pageId/pageTitle",  component: PageComponent }
-            //     ]
-            // },
             {
                 path: 'wiki',
                    component: WikiListComponent
@@ -40,6 +32,11 @@ export const appRoutes: Routes = [
                 path: 'wiki/:wikiId/:wikiTitle', 
                 component: WikiTocComponent  
             },
+            {
+                path: 'wikitoc/:wikiId', 
+                component: PagesComponent  
+            },
+                        
             {
                 path: 'wiki/page/:id/:title',
                 component: PageComponent
@@ -71,81 +68,3 @@ export const appRoutes: Routes = [
             }
 ];
 
-
-
-
-            // {
-            //     path: 'home',
-            //     component: HomeComponent,
-            //     canActivate:[AuthGuardService],
-            // },
-            // {
-            //     path: 'services',
-            //     children: [
-            //         {path: "", pathMatch: 'full', component: ServicesComponent},
-            //         {path: ":service",  component: ServicesComponent }
-            //     ]
-            // },
-            // {
-            //     path: 'locations',
-            //     component: LocationsComponent
-            // },
-            // {
-            //     path: 'careers',
-            //     component: CareersComponent
-            // },
-            // {
-            //     path: 'about-us',
-            //     component: AboutUsComponent
-            // },
-            // {
-            //     path: 'contact-us',
-            //     component: ContactUsComponent
-            // },
-            // {
-            //     path: 'service-area/:fromZip/:toZip',
-            //     component: ServiceAreaComponent
-            // },
-            // {
-            //     path: 'reports',
-            //     loadChildren: 'app/reports/reports.module#ReportsModule',
-            //     data: { preload: true }
-            // },
-            // {
-            //     path: 'track',
-            //     loadChildren: 'app/track/track.module#TrackModule',
-            //     data: { preload: true }
-            // },
-            // {
-            //     path: 'manage',
-            //     children: [
-            //         {
-            //             path: 'my-profile',
-            //             loadChildren: 'app/manage/my-profile/my-profile.module#MyProfileModule'
-            //         },
-            //         {
-            //             path: 'users',
-            //             loadChildren: 'app/manage/users/users.module#UsersModule'
-            //         },
-            //         {
-            //             path: 'customers',
-            //             loadChildren: 'app/manage/business-entities/business-entities.module#BusinessEntitiesModule'
-            //         },
-            //         {
-            //             path: 'system',
-            //             loadChildren: 'app/manage/system/system.module#SystemModule'
-            //         },
-            //         {
-            //             path: 'my-company',
-            //             loadChildren: 'app/manage/my-company/my-company.module#MyCompanyModule'
-            //         },
-            //         {
-            //             path: 'logistics',
-            //             loadChildren: 'app/manage/logistics/logistics.module#LogisticsModule'
-            //         }
-            //     ]
-            // },
-            // {
-            //     path: 'account/:mode/:id/:userid/:token',
-            //     component: AccountComponent,
-            // },

@@ -15,6 +15,9 @@ import { TabsModule } from 'ngx-bootstrap';
 import { MarkdownModule } from 'angular2-markdown';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
+import { TreeModule } from 'angular-tree-component';
+
+
 import { WikiPagesService } from './services/wiki-pages.service';
 import { WikiFilesService } from './services/wiki-files.service';
 
@@ -71,6 +74,7 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
     TabsModule.forRoot(),
     ReactiveFormsModule,
     MarkdownModule,
+    TreeModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
