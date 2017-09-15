@@ -29,6 +29,24 @@ export class PagesComponent implements OnInit {
    public wikiList: IWikiName[];
    public pageList: IPageSummary[];
 
+  //  customTemplateStringOptions = {
+  //   // displayField: 'subTitle',
+  //   isExpandedField: 'expanded',
+  //   idField: 'uuid',
+  //   getChildren: this.getChildren.bind(this),
+  //   actionMapping,
+  //   nodeHeight: 23,
+  //   allowDrag: true,
+  //   useVirtualScroll: true
+  // }
+
+
+
+   customTemplateStringOptions = {
+    allowDrag: true,
+    useVirtualScroll: true
+  }
+
 
   public nodes = [
     {
