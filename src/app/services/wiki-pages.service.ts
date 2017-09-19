@@ -5,11 +5,14 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 
-import {IWiki , IPage , ITag,IPageSummary , IWikiName }  from '../types/Wiki-Interfaces';
+import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc }  from '../types/Wiki-Interfaces';
 
 @Injectable()
 export class WikiPagesService {
-  public serviceBase : string = 'https://devwebservice.adldelivery.com/wikiapi/';
+
+   public serviceBase : string = 'https://devwebservice.adldelivery.com/wikiapi/';
+ // public serviceBase : string = 'https://localhost:44305/wikiapi/';
+
   constructor(
     private http: Http
   ) { }
@@ -49,6 +52,16 @@ public  getWiki(wikiId: number): Observable<IWiki> {
           .map(response => response.json() as IPage)
           .catch(this.handleError);
     }
+
+    public  getWikiToc(WikiId: number): Observable<IWikiToc> {
+      let url = this.serviceBase + '/toc/WikiToc/' + WikiId +'' ;
+        return this.http.get(url)
+        .do(x=>{
+          console.log( " response = ", x);
+         } )
+        .map(response => response.json() as IWikiToc)
+        .catch(this.handleError);
+  }
 
 
 private handleError(error: Response) {

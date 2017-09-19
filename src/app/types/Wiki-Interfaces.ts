@@ -26,7 +26,6 @@
         pageContent: string;
     }
 
-
     export interface ITag {
         id: number;
         createdBy: number;
@@ -47,8 +46,15 @@
         }
     }
 
-
     export interface IWikiName {
         id: number;
         title: string;
     }
+
+    export interface IWikiToc {
+        id: number;
+        order: number;
+        name: string;
+        children: IWikiToc[];
+    }
+

@@ -7,7 +7,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 //import { TreeModule } from 'angular-tree-component';
 import { TreeNode, TreeModel, TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions } from 'angular-tree-component';
-import { IWiki , IPage , ITag,IPageSummary , IWikiName }  from '../types/Wiki-Interfaces';
+import { IWiki , IPage , ITag,IPageSummary , IWikiName, IWikiToc }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
 
 @Component({
@@ -28,6 +28,12 @@ export class PagesComponent implements OnInit {
    public wiki: IWiki;
    public wikiList: IWikiName[];
    public pageList: IPageSummary[];
+   public wikiToc: IWikiToc = {
+    id: 0,
+  order: 0,
+    name: "empty",
+    children: [ ]
+   };
 
   //  customTemplateStringOptions = {
   //   // displayField: 'subTitle',
@@ -39,8 +45,6 @@ export class PagesComponent implements OnInit {
   //   allowDrag: true,
   //   useVirtualScroll: true
   // }
-
-
 
    customTemplateStringOptions = {
     allowDrag: true,
@@ -71,7 +75,6 @@ export class PagesComponent implements OnInit {
         }
       ]
     },
-
     {
       id: 8,
       name: 'root3',
@@ -86,12 +89,7 @@ export class PagesComponent implements OnInit {
         }
       ]
     }
-
-
   ];
-
-
-
 
 /*
                 <ol>
@@ -118,22 +116,18 @@ export class PagesComponent implements OnInit {
       // we have the wiki id, list the pages 
       //
       console.log(' has param = ' , wikiId);
-              this.wikiPagesService.getWikiPageList(wikiId).subscribe(wPages =>{
-                console.log(' wiki pages = ' ,wPages);
-                this.pageList = wPages;
-              });
+      this.wikiPagesService.getWikiToc(wikiId).subscribe(wToc =>{
+        console.log(' wiki pages = ' ,wToc);
+        this.wikiToc = wToc;
+        console.log(' this.wikiToc = ' ,this.wikiToc);
+        this.nodes = this.wikiToc.children;
+      });
     }
     else{
-
-
       //
       // no id then list the wiki's that are avilible
       //
       console.log('no id get list ' );
- 
-
     }
-
   }
-
 }

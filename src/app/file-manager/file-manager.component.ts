@@ -4,7 +4,8 @@ import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-u
 
   //   const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/fileupload/';
 
-const uploadURL =     'https://localhost:44305/wikiapi/assets/file/'
+// const uploadURL =     'https://localhost:44305/wikiapi/assets/file/'
+   const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/assets/file/';
 
 @Component({
   selector: 'app-file-manager',
