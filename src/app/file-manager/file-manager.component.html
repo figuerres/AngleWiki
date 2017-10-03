@@ -1,4 +1,12 @@
 
+<ngfUploader 
+  [(ref)]="uploader"
+  [useNgHttp]="true"
+  [options]="{url:'https://devwebservice.adldelivery.com/wikiapi/assets/' }"
+  (done)="onUploadDone($event)" 
+  (success)="onUploaded($event)" 
+  (catch)="onUploadError($event)" 
+  />
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
@@ -11,15 +19,14 @@
                         [uploader]="uploader"
                         class="well my-drop-zone">
                         Base drop zone
-                    </div> 
-
+                    </div>
                 </div>
-            </div> 
+            </div>
             <div class="panel panel-info">
                     <div class="panel-heading">File Select Dialog</div>
                     <div class="panel-body">
                         Multiple
-                        <input type="file" ngfSelect [uploader]="uploader" multiple  /><br/>
+                        <input type="file" ngfSelect [uploader]="uploader" multiple /><br/>
                     </div>
                 </div>
         </div> 
@@ -127,7 +134,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let item of uploader.queue">
+                        <tr *ngFor="let item of ngf.files">
 
                             <td>
                                 <div *ngIf="['image/png','image/jpeg'].indexOf(item._file.type)>=0">

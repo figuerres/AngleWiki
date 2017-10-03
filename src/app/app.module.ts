@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -11,18 +10,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { TypeaheadModule, ProgressbarModule, AlertModule, AccordionModule } from 'ngx-bootstrap';
 import { TabsModule } from 'ngx-bootstrap';
-// import { ModalModule } from 'angular2-modal';
 import { MarkdownModule } from 'angular2-markdown';
-import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
-
+import { ngfModule  } from "angular-file"
 import { TreeModule } from 'angular-tree-component';
 
 
 import { WikiPagesService } from './services/wiki-pages.service';
 import { WikiFilesService } from './services/wiki-files.service';
-
 import { appRoutes } from './app.routes';
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -42,8 +37,7 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 @NgModule({
   declarations: [
     AppComponent,
-    FileSelectDirective,
-    FileDropDirective,
+    ngfModule,
     LoginComponent,
     NotFoundComponent,
     UnauthorizedComponent,
@@ -69,7 +63,6 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
     TypeaheadModule.forRoot(),
     AlertModule.forRoot(),
     ProgressbarModule.forRoot(),
-   // ModalModule.forRoot(),
     AlertModule.forRoot(),
     TabsModule.forRoot(),
     ReactiveFormsModule,

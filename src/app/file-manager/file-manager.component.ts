@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
-import { ngfModule, FileUploader, ngf } from "angular-file"
+import { ngfModule, ngfUploader, ngf } from "angular-file"
 
 
   //   const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/fileupload/';
@@ -30,10 +30,38 @@ import { ngfModule, FileUploader, ngf } from "angular-file"
 
 export class FileManagerComponent implements OnInit {
 
-  public uploader: FileUploader = new FileUploader({url: uploadURL});
+  // public uploader: FileUploader = new FileUploader({url: uploadURL});
+  public uploader: ngfUploader ;
+
   public hasBaseDropZoneOver: boolean = false;
   public hasAnotherDropZoneOver: boolean = false;
-public ngfOb : ngf;
+  public ngfOb : ngf;
+
+
+  constructor() { 
+  }
+
+  ngOnInit() {
+  }
+
+  public UploadAll(){
+    this.uploader.uploadFiles( this.ngfOb.files );
+  }
+
+
+public onUploadDone(e: any){
+
+}
+
+public onUploaded(e: any){
+
+}
+
+public onUploadError(e: any){
+
+}
+
+
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
@@ -44,16 +72,10 @@ public ngfOb : ngf;
     this.hasAnotherDropZoneOver = e;
   }
 
-  constructor() { 
 
 
-  }
 
-  ngOnInit() {
 
-   
 
-    
-  }
 
 }
