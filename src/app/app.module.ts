@@ -36,8 +36,7 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ngfModule,
+    AppComponent, 
     LoginComponent,
     NotFoundComponent,
     UnauthorizedComponent,
@@ -52,7 +51,7 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
     WikiTocComponent
   ],
   imports: [
-
+    ngfModule,
     BrowserModule,
     CommonModule,
     FormsModule,

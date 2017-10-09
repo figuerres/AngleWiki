@@ -37,6 +37,9 @@ export class FileManagerComponent implements OnInit {
   public hasAnotherDropZoneOver: boolean = false;
   public ngfOb : ngf;
 
+  files:File[];
+  file:File;
+
 
   constructor() { 
   }
@@ -45,37 +48,33 @@ export class FileManagerComponent implements OnInit {
   }
 
   public UploadAll(){
+
+    console.log("UploadAll: "  );
+    console.log("  this.ngfOb : ", this.ngfOb );
+    console.log("  this.ngfOb.files : ", this.ngfOb.files  );
+
     this.uploader.uploadFiles( this.ngfOb.files );
   }
 
-
-public onUploadDone(e: any){
-
-}
-
-public onUploaded(e: any){
-
-}
-
-public onUploadError(e: any){
-
-}
-
-
-
+  public onUploadDone(e: any){
+    console.log("onUploadDone: ", e);
+  }
+  
+  public onUploaded(e: any){
+    console.log("onUploaded: ", e);
+  }
+  
+  public onUploadError(e: any){
+    console.log("onUploadError: ", e);
+  }
+  
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
   }
-
-
+  
   public fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
   }
-
-
-
-
-
 
 
 }
