@@ -11,7 +11,6 @@ import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { TypeaheadModule, ProgressbarModule, AlertModule, AccordionModule } from 'ngx-bootstrap';
 import { TabsModule } from 'ngx-bootstrap';
 import { MarkdownModule } from 'angular2-markdown';
-import { ngfModule  } from "angular-file"
 import { TreeModule } from 'angular-tree-component';
 
 
@@ -34,6 +33,7 @@ import { PageComponent } from './page/page.component';
 import { WikiListComponent } from './wiki-list/wiki-list.component';
 import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 
+
 @NgModule({
   declarations: [
     AppComponent, 
@@ -49,9 +49,9 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
     PageComponent,
     WikiListComponent,
     WikiTocComponent
+  
   ],
   imports: [
-    ngfModule,
     BrowserModule,
     CommonModule,
     FormsModule,
