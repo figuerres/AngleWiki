@@ -7,50 +7,67 @@ import { Observable } from 'rxjs/Rx';
 
 import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc }  from '../types/Wiki-Interfaces';
 
+//import { AdlLoggerService } from '../shared/adl-logger.service';
+
 @Injectable()
 export class WikiPagesService {
+
+ 
 
    public serviceBase : string = 'https://devwebservice.adldelivery.com/wikiapi/';
  // public serviceBase : string = 'https://localhost:44305/wikiapi/';
 
   constructor(
     private http: Http
-  ) { }
+  //   , private logger: AdlLoggerService
+   ) {
+
+   }
 
   public  getWikiList(): Observable<IWiki[]> {
     let url = this.serviceBase + 'Wikis';
       return this.http.get(url)
       .map(response => response.json().value as IWiki[])
-      .catch(this.handleError);
+      .catch(error => this.handleError(error,url)  );
 }
 
 // Wikis?$select=id%2Ctitle&$orderby=title
 public  getWikiNameList(): Observable<IWikiName[]> {
+
   let url = this.serviceBase + 'Wikis?$select=id,title&$orderby=title';
     return this.http.get(url)
     .map(response => response.json().value as IWikiName[])
-    .catch(this.handleError);
+    .catch(error => this.handleError(error,url) );
 }
 
 public  getWiki(wikiId: number): Observable<IWiki> { 
       let url = this.serviceBase + 'Wikis(' + wikiId +')' ; 
         return this.http.get(url) 
         .map(response => response.json() as IWiki)
-        .catch(this.handleError);
+        .catch(error => this.handleError(error,url) );
   }
 
   public  getWikiPageList(wikiId: number): Observable<IPageSummary[]> {
         let url = this.serviceBase + 'Pages?$expand=wiki($select=title)&$filter=wikiId eq ' + wikiId +'&$select=wikiId,id,title&$orderby=title';
           return this.http.get(url)
           .map(response => response.json().value as IPageSummary[])
-          .catch(this.handleError);
+          .catch(error => this.handleError(error,url) );
     }
 
   public  getWikiPage(pageId: number): Observable<IPage> {
+
         let url = this.serviceBase + '/Pages(' + pageId +')' ;
           return this.http.get(url)
           .map(response => response.json() as IPage)
-          .catch(this.handleError);
+          .catch(error => this.handleError(error,url) );
+
+        // let url = 'https://devwebservice.adldelivery.com/api/Error/xThrow' ;
+        //   return this.http.post(url,'')
+        //   .map(response => response.json() as IPage)
+        //   .catch(error => this.handleError(error,url) );
+
+
+
     }
 
     public  getWikiToc(WikiId: number): Observable<IWikiToc> {
@@ -60,15 +77,21 @@ public  getWiki(wikiId: number): Observable<IWiki> {
           console.log( " response = ", x);
          } )
         .map(response => response.json() as IWikiToc)
-        .catch(this.handleError);
+        .catch(error => this.handleError(error,url) );
   }
 
 
-private handleError(error: Response) {
-  // in a real world app, we may send the server to some remote logging infrastructure
-  // instead of just logging it to the console
-
-  console.error(error);
+private handleError(error: Response, url:string) {
+   // in a real world app, we may send the server to some remote logging infrastructure
+   // instead of just logging it to the console
+   //
+     console.error(error);
+   //
+   //console.log("this.logger : ", this.logger);
+   //console.log("this.logger.log : ", this.logger.log);
+   //
+   //
+   //  this.logger.log.error("wiki page service", url  , error);
 
   return Observable.throw(error.json().error || 'Server error');
 }

@@ -31,7 +31,7 @@ export class ngf {
   @Input() file:File//last file uploaded
   @Output() fileChange:EventEmitter<File> = new EventEmitter()
 
-  @Input() files:File[]
+  @Input() files:Array<File> = new Array<File>();
   @Output() filesChange:EventEmitter<File[]> = new EventEmitter<File[]>();
 
   constructor(public element:ElementRef){}
@@ -107,48 +107,58 @@ export class ngf {
     return {};
   }
 
-  // handleFiles(files:File[]){
-  //  // const valids = this.uploader.getValidFiles(files)
+  handleFiles(files:File[]){
+  //  const valids = this.uploader.getValidFiles(files)
     
-  //   // if(files.length!=valids.length){
-  //   //  // this.lastInvalids = this.uploader.getInvalidFiles(files)
-  //   // }else{
-  //   //   this.lastInvalids = null
-  //   // }
-    
-  //   this.lastInvalidsChange.emit(this.lastInvalids)
-
-  //   // if( valids.length ){
-  //   //   if( this.ngfFixOrientation ){
-  //   //   //  this.applyExifRotations(valids)
-  //   //   //  .then( fixedFiles=>this.que(fixedFiles) )
-  //   //   }else{
-  //   //    // this.que(valids)
-  //   //   }
-  //   // }
-
-  //   if (this.isEmptyAfterSelection()) {
-  //     this.element.nativeElement.value = '';
+  //   if(files.length!=valids.length){
+  //    // this.lastInvalids = this.uploader.getInvalidFiles(files)
+  //   }else{
+       this.lastInvalids = null;
   //   }
-  // }
-
-  // que(files:File[]){
-  //  // this.uploader.addToQueue(files);
-  //   this.filesChange.emit( this.files=files );
     
-  //   if(files.length){
-  //     this.fileChange.emit( this.file=files[0] )
+    this.lastInvalidsChange.emit(this.lastInvalids);
 
-  //     if(this.lastBaseUrlChange.observers.length){
-  //      // this.uploader.dataUrl( files[0] )
-  //     //  .then( url=>this.lastBaseUrlChange.emit(url) )
-  //     }
-  //   }
-  // }
+    // if( valids.length ){
+    //   if( this.ngfFixOrientation ){
+    //   //  this.applyExifRotations(valids)
+    //   //  .then( fixedFiles=>this.que(fixedFiles) )
+    //   }else{
+    //    // this.que(valids)
+    //   }
+    // }
+    this.que(files);
+
+    if (this.isEmptyAfterSelection()) {
+      this.element.nativeElement.value = '';
+    }
+  }
+
+  que(fileList:File[]){
+   // this.uploader.addToQueue(files);
+console.log(" que(files:File[])", fileList);
+for (let file of fileList) {
+  console.log("file :",file.name);
+ this.files.push(file);
+}
+
+   //this.files = files;
+   console.log(" this.files", this.files);
+
+    this.filesChange.emit( this.files=fileList );
+    
+    if(fileList.length){
+      this.fileChange.emit( this.file=fileList[0] )
+
+      if(this.lastBaseUrlChange.observers.length){
+       // this.uploader.dataUrl( files[0] )
+      //  .then( url=>this.lastBaseUrlChange.emit(url) )
+      }
+    }
+  }
 
   changeFn(event:any) {
     var fileList = event.__files_ || (event.target && event.target.files), files = [];
-
+console.log("changeFn(event:any)", fileList);
     if (!fileList) return;
 
     this.stopEvent(event);
@@ -174,13 +184,19 @@ export class ngf {
   }
 
   eventToTransfer(event:any):any {
-    if(event.dataTransfer)return event.dataTransfer
-    return  event.originalEvent ? event.originalEvent.dataTransfer : null
+    console.log(" eventToTransfer(event:any)", event );
+    if(event.dataTransfer){
+      return event.dataTransfer;
+    }
+    
+    return  event.originalEvent ? event.originalEvent.dataTransfer : null;
   }
 
   stopEvent(event:any):any {
+    console.log("stopEvent(event:any)", event );
     event.preventDefault();
     event.stopPropagation();
+
   }
 
   transferHasFiles(transfer:any):any {
@@ -198,9 +214,16 @@ export class ngf {
   }
 
   eventToFiles(event:Event){
+    console.log(" eventToFiles(event:Event)", event );
     let transfer = this.eventToTransfer(event);
-    if(transfer.files && transfer.files.length)return transfer.files
-    if(transfer.items && transfer.items.length)return transfer.items
+    if(transfer.files && transfer.files.length){
+      return transfer.files;
+    }
+  
+    if(transfer.items && transfer.items.length){
+      return transfer.items;
+    }
+     
     return []
   }
 
@@ -220,10 +243,14 @@ export class ngf {
   @HostListener('change', ['$event'])
   onChange(event:Event):void {
     let files = this.element.nativeElement.files || this.eventToFiles(event)
-
-    if(!files.length)return
+console.log(" onChange(event:Event)", files );
+    if(!files.length){
+       return;
+    }
+   
 
     this.stopEvent(event);
-   // this.handleFiles(files)
+
+    this.handleFiles(files);
   }
 }

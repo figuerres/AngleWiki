@@ -1,15 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgfDirective } from './ngf.directive';
-import { NgfBackgroundDirective } from './ngf-background.directive';
-import { NgfSelectDirective } from './ngf-select.directive';
-import { NgfDropDirective } from './ngf-drop.directive';
-import { NgfUploaderDirective } from './ngf-uploader.directive';
+import{ HttpModule } from '@angular/http';
+
+import { ngf } from './ngf.directive';
+import { ngfBackground } from './ngf-background.directive';
+import { ngfSelect } from './ngf-select.directive';
+import { ngfDrop } from './ngf-drop.directive';
+import { ngfUploader } from './ngf-uploader.directive';
+
+
+const declarations = [
+  ngfDrop,
+  ngfSelect,
+  ngfBackground,
+  ngfUploader,
+  ngf
+]
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    HttpModule
   ],
-  declarations: [NgfDirective, NgfBackgroundDirective, NgfSelectDirective, NgfDropDirective, NgfUploaderDirective]
-})
-export class NgfModule { }
+  declarations: declarations,
+  exports: [HttpModule, ...declarations]
+}) 
+export class ngfModule {}
+
+
+

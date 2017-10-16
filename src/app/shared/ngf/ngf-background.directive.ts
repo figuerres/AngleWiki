@@ -5,7 +5,7 @@ function getWindow():any{return window}
 @Directive({
   selector: '[ngfBackground]'
 })
-export class ngfBackgroundDirective {
+export class ngfBackground {
   @Input('ngfBackground') file:any
 
   constructor(public ElementRef:ElementRef) { 

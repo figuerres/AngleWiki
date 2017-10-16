@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+
 //import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
+//import { ngfModule , ngfDrop,   ngfSelect,   ngfBackground,   ngfUploader,   ngf } from '../shared/ngf/ngf.module'
 
-import { ngfModule, ngfUploader, ngf } from "angular-file"
+import { ngfDrop,   ngfSelect,   ngfBackground,   ngfUploader,   ngf } from '../shared/ngf'
 
 
-  //   const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/fileupload/';
+//import { ngfModule  } from '../shared/ngf/ngf.module'
+//   const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/fileupload/';
+// const uploadURL =     'https://localhost:44305/wikiapi/assets/'
 
- // const uploadURL =     'https://localhost:44305/wikiapi/assets/'
    const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/assets/';
 
 @Component({

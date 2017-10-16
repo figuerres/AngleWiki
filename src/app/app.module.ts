@@ -4,6 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+
+import { ErrorHandler } from '@angular/core';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -32,6 +35,10 @@ import { PageComponent } from './page/page.component';
 
 import { WikiListComponent } from './wiki-list/wiki-list.component';
 import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
+
+//import { AdlLoggerService } from './shared/adl-logger.service';
+
+import { ngfModule  } from './shared/ngf/ngf.module'
 
 
 @NgModule({
@@ -67,11 +74,14 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
     ReactiveFormsModule,
     MarkdownModule,
     TreeModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ngfModule
   ],
   providers: [
     WikiPagesService,
     WikiFilesService
+    //,
+   // AdlLoggerService
   ],
   bootstrap: [AppComponent]
 })

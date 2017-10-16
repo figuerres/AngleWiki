@@ -5,14 +5,10 @@ import 'rxjs/add/operator/toPromise';
 //import { FileUploaderOptions, FileUploader } from "./FileUploader.class"
 //import { FileItem } from './FileItem.class';
 
-
 export type FilterFunction = {
   name:string,
   fn:(item?:File, options?:FileUploaderOptions)=>boolean
 };
-
-
-
 
 export interface FileUploaderOptions {
   forceFilename?:string;//override that all files will have defined name
@@ -38,10 +34,6 @@ export interface FileUploaderOptions {
 
 
 
-
-
-
-
 @Directive({selector: 'ngfUploader'})
 export class ngfUploader  {
   //@Output('init') directiveInit:EventEmitter<ngf> = new EventEmitter()
@@ -52,13 +44,13 @@ export class ngfUploader  {
   @Output() success = new EventEmitter()
   @Output('catch') catcher = new EventEmitter()
 
-  // @Input() options:FileUploaderOptions = {
-  //   autoUpload: false,
-  //   isHTML5: true,
-  //   filters: [],
-  //   removeAfterUpload: false,
-  //   disableMultipart: false
-  // }
+  @Input() options:FileUploaderOptions = {
+    autoUpload: false,
+    isHTML5: true,
+    filters: [],
+    removeAfterUpload: false,
+    disableMultipart: false
+  }
 
   @Input() useNgHttp:any = false
 
@@ -72,16 +64,13 @@ export class ngfUploader  {
   autoUpload:any;
   authTokenHeader: string;
 
-  options:FileUploaderOptions = {
-    autoUpload: false,
-    isHTML5: true,
-    filters: [],
-    removeAfterUpload: false,
-    disableMultipart: false
-  };
-
-
-
+  // options:FileUploaderOptions = {
+  //   autoUpload: false,
+  //   isHTML5: true,
+  //   filters: [],
+  //   removeAfterUpload: false,
+  //   disableMultipart: false
+  // };
 
 
   constructor(public Http:Http){
@@ -111,8 +100,9 @@ export class ngfUploader  {
       }
     })
 
-    const promise:Promise<any> = this.useNgHttp ? this.ngHttpFiles( this.getFormData(valids) ) : this.xhrOneByOne(valids)
-
+   // const promise:Promise<any> = this.useNgHttp ? this.ngHttpFiles( this.getFormData(valids) ) : this.xhrOneByOne(valids)
+    const promise:Promise<any> =  this.ngHttpFiles( this.getFormData(valids) ) 
+    
     return promise.then( response=>this.success.emit(response) )
     .catch( e=>{
       this.catcher.emit(e);
@@ -121,14 +111,14 @@ export class ngfUploader  {
     })
   }
 
-  //old school way to send files. Still pretty handy
-  xhrOneByOne(files:File[]):Promise<any[]>{
-    const promises = files.map(file=>{
-      const fileItem = new FileItem(this, file, this.options)
-      return this._xhrTransport( fileItem )
-    })
-    return Promise.all(promises)
-  }
+  // //old school way to send files. Still pretty handy
+  // xhrOneByOne(files:File[]):Promise<any[]>{
+  //   const promises = files.map(file=>{
+  //     //const fileItem = new FileItem(this, file, this.options)
+  //     return this._xhrTransport( file )
+  //   })
+  //   return Promise.all(promises)
+  // }
 
   ngHttpFiles( formData:FormData ){
     const config:any = Object.assign({}, this.options)
