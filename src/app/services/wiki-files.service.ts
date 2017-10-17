@@ -2,7 +2,10 @@
 
 import { Injectable, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+
+import { HttpClient } from '@angular/common/http';
+
+// import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 
@@ -12,7 +15,7 @@ import { Observable } from 'rxjs/Rx';
 export class WikiFilesService {
   public serviceBase : string = 'https://devwebservice.adldelivery.com/wikiapi/';
   constructor(
-    private http: Http
+    private http: HttpClient
   ) { }
 
 //   public  getWikiList(): Observable<IWiki[]> {
@@ -58,7 +61,7 @@ private handleError(error: Response) {
 
   console.error(error);
 
-  return Observable.throw(error.json().error || 'Server error');
+  return Observable.throw(error || 'Server error');
 }
 
 }

@@ -3,7 +3,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+// import { HttpModule } from '@angular/http';
+
+import { HttpClientModule } from '@angular/common/http';
+
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { ErrorHandler } from '@angular/core';
 
@@ -37,9 +41,11 @@ import { WikiListComponent } from './wiki-list/wiki-list.component';
 import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 
 //import { AdlLoggerService } from './shared/adl-logger.service';
-
+import { AdlGlobalInterceptor } from './shared/adl-global-interceptor.service';
 import { ngfModule  } from './shared/ngf/ngf.module'
 
+import { AdlGlobalAuth } from './shared/adl-global-auth.service';
+import { AdlGlobalConfig } from './shared/adl-global-config.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +68,7 @@ import { ngfModule  } from './shared/ngf/ngf.module'
     BrowserModule,
     CommonModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     Ng2BootstrapModule,
     AccordionModule.forRoot(),
@@ -79,9 +85,14 @@ import { ngfModule  } from './shared/ngf/ngf.module'
   ],
   providers: [
     WikiPagesService,
-    WikiFilesService
-    //,
-   // AdlLoggerService
+    WikiFilesService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AdlGlobalInterceptor,
+      multi: true,
+    },
+    AdlGlobalAuth,
+    AdlGlobalConfig
   ],
   bootstrap: [AppComponent]
 })

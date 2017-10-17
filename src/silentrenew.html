@@ -1,0 +1,5 @@
+<!DOCTYPE html>
+<html><head><title>user logout</title></head><body><script src='/assets/script/oidc-client.min.js'></script>
+<script>Oidc.Log.logger = console;Oidc.Log.level = Oidc.Log.INFO;
+// true param will keep popup window open
+new Oidc.UserManager().signinSilentCallback();</script></body></html>
