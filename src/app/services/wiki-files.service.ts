@@ -1,15 +1,9 @@
 
 
-import { Injectable, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import { HttpClient } from '@angular/common/http';
-
-// import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
+import { Injectable} from '@angular/core';
+import { HttpClient,   HttpResponse , HttpRequest, HttpHeaders , HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
-//import {IWiki , IPage , ITag,IPageSummary , IWikiName }  from '../types/Wiki-Interfaces';
 
 @Injectable()
 export class WikiFilesService {
@@ -18,53 +12,23 @@ export class WikiFilesService {
     private http: HttpClient
   ) { }
 
-//   public  getWikiList(): Observable<IWiki[]> {
-//     let url = this.serviceBase + 'Wikis';
-//       return this.http.get(url)
-//       .map(response => response.json().value as IWiki[])
-//       .catch(this.handleError);
-// }
+  public  UploadFiles(files:File[])  {
+    let url = this.serviceBase + 'assets';
+    const formData:FormData = new FormData();
+    for (let file of files) {
+      formData.append('file', file, file.name );
+    }
+    return this.http.post( url, FormData,{reportProgress: true} ) ;
+  }
 
-// // Wikis?$select=id%2Ctitle&$orderby=title
-// public  getWikiNameList(): Observable<IWikiName[]> {
-//   let url = this.serviceBase + 'Wikis?$select=id,title&$orderby=title';
-//     return this.http.get(url)
-//     .map(response => response.json().value as IWikiName[])
-//     .catch(this.handleError);
-// }
-
-// public  getWiki(wikiId: number): Observable<IWiki> { 
-//       let url = this.serviceBase + 'Wikis(' + wikiId +')' ; 
-//         return this.http.get(url) 
-//         .map(response => response.json() as IWiki)
-//         .catch(this.handleError);
-//   }
-
-//   public  getWikiPageList(wikiId: number): Observable<IPageSummary[]> {
-//         let url = this.serviceBase + 'Pages?$expand=wiki($select=title)&$filter=wikiId eq ' + wikiId +'&$select=wikiId,id,title&$orderby=title';
-//           return this.http.get(url)
-//           .map(response => response.json().value as IPageSummary[])
-//           .catch(this.handleError);
-//     }
-
-//   public  getWikiPage(pageId: number): Observable<IPage> {
-//         let url = this.serviceBase + '/Pages(' + pageId +')' ;
-//           return this.http.get(url)
-//           .map(response => response.json() as IPage)
-//           .catch(this.handleError);
-//     }
-
-
-private handleError(error: Response) {
-  // in a real world app, we may send the server to some remote logging infrastructure
-  // instead of just logging it to the console
-
-  console.error(error);
-
-  return Observable.throw(error || 'Server error');
-}
+  
+  private handleError(error: Response) {
+    // in a real world app, we may send the server to some remote logging infrastructure
+    // instead of just logging it to the console
+  
+    console.error(error);
+  
+    return Observable.throw(error || 'Server error');
+  }
 
 }
-
-
-

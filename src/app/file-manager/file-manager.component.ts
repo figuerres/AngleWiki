@@ -50,6 +50,15 @@ export class FileManagerComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  public filesChange(e: any){
+    console.log("filesChange: ", e);
+    let  filesList:Array<File> =  e as  Array<File>;
+    for (let file of filesList) {
+      console.log("file :",file.name);
+    }
+  }
+
   public UploadAll(){
 
     console.log("UploadAll: "  );

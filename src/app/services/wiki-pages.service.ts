@@ -8,13 +8,8 @@ import {HttpClient  , HttpResponse , HttpRequest, HttpHeaders  } from '@angular/
 import { Observable } from 'rxjs/Rx';
 
 import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc }  from '../types/Wiki-Interfaces';
-
+import { IOData } from '../types/odata.interface'
 //import { AdlLoggerService } from '../shared/adl-logger.service';
-
-interface OData {
-  context: string;
-  value: any[];
-}
 
 
 @Injectable()
@@ -29,15 +24,14 @@ export class WikiPagesService {
   public  getWikiList(): Observable<IWiki[]> {
     let url = this.serviceBase + 'Wikis';
     return this.http.get(url)
-    .map(r =>  (r as OData).value as IWiki[]);
-    
+    .map(r =>  (r as IOData).value as IWiki[]);  
   }
 
   // Wikis?$select=id%2Ctitle&$orderby=title
   public  getWikiNameList(): Observable<IWikiName[]> {
     let url = this.serviceBase + 'Wikis?$select=id,title&$orderby=title';
     return this.http.get(url) 
-    .map(r => (r as OData).value as IWikiName[] );
+    .map(r => (r as IOData).value as IWikiName[] );
   }
 
   public  getWiki(wikiId: number): Observable<IWiki> { 
@@ -47,7 +41,7 @@ export class WikiPagesService {
 
   public  getWikiPageList(wikiId: number): Observable<IPageSummary[]> {
     let url = this.serviceBase + 'Pages?$expand=wiki($select=title)&$filter=wikiId eq ' + wikiId +'&$select=wikiId,id,title&$orderby=title';
-    return this.http.get(url).map(r => (r as OData).value as IPageSummary[] );
+    return this.http.get(url).map(r => (r as IOData).value as IPageSummary[] );
   }
 
   // let url = 'https://devwebservice.adldelivery.com/api/Error/xThrow' ;
