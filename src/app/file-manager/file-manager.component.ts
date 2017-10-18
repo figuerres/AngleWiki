@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-//import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
-//import { ngfModule , ngfDrop,   ngfSelect,   ngfBackground,   ngfUploader,   ngf } from '../shared/ngf/ngf.module'
+import { HttpClient,   HttpResponse , HttpRequest, HttpHeaders , HttpParams, HttpEventType,HttpProgressEvent  } from '@angular/common/http';
 
-import { ngfDrop,   ngfSelect,   ngfBackground,   ngfUploader,   ngf } from '../shared/ngf'
+import { ngfSelect,   ngfBackground,  } from '../shared/ngf'
 
+import { WikiFilesService } from '../services/wiki-files.service';
 
-//import { ngfModule  } from '../shared/ngf/ngf.module'
-//   const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/fileupload/';
-// const uploadURL =     'https://localhost:44305/wikiapi/assets/'
 
    const uploadURL = 'https://devwebservice.adldelivery.com/wikiapi/assets/';
 
@@ -33,18 +30,11 @@ import { ngfDrop,   ngfSelect,   ngfBackground,   ngfUploader,   ngf } from '../
 
 export class FileManagerComponent implements OnInit {
 
-  // public uploader: FileUploader = new FileUploader({url: uploadURL});
-  public uploader: ngfUploader ;
+  public files:Array<File> = new Array<File>();
 
-  public hasBaseDropZoneOver: boolean = false;
-  public hasAnotherDropZoneOver: boolean = false;
-  public ngfOb : ngf;
+ public uploadProgress: number = 0;
 
-  files:File[];
-  file:File;
-
-
-  constructor() { 
+  constructor( private FilesService :WikiFilesService ) { 
   }
 
   ngOnInit() {
@@ -54,19 +44,48 @@ export class FileManagerComponent implements OnInit {
   public filesChange(e: any){
     console.log("filesChange: ", e);
     let  filesList:Array<File> =  e as  Array<File>;
+    
     for (let file of filesList) {
-      console.log("file :",file.name);
+      this.files.push(file);
     }
+
   }
 
-  public UploadAll(){
+public uploadAll(){
 
-    console.log("UploadAll: "  );
-    console.log("  this.ngfOb : ", this.ngfOb );
-    console.log("  this.ngfOb.files : ", this.ngfOb.files  );
+  this.FilesService.UploadFiles(  this.files ).subscribe(event  =>{
+    if (event.type === HttpEventType.DownloadProgress) {
+      console.log("Download progress event", event);
+    }
+    if (event.type === HttpEventType.UploadProgress) {
+      console.log("Upload progress event", event);
+      // This is an upload progress event. Compute and show the % done:
+    // const percentDone = Math.round(100 * event.loaded / event.total);
+    this.uploadProgress = Math.round(100 * event.loaded / event.total);
+    console.log(`File is ${this.uploadProgress}% uploaded.`);
 
-    this.uploader.uploadFiles( this.ngfOb.files );
-  }
+    }
+    if (event.type === HttpEventType.Response) {
+      console.log("response received...", event.body);
+    }
+
+    if (event instanceof HttpResponse) {
+      this.uploadProgress = 0;
+      console.log('File is completely uploaded!');
+    }
+
+
+  });
+}
+
+
+public cancelAll(){
+  this.files = new Array<File>();
+}
+
+public clearQueue(){
+ this.files = new Array<File>();
+}
 
   public onUploadDone(e: any){
     console.log("onUploadDone: ", e);
@@ -80,13 +99,5 @@ export class FileManagerComponent implements OnInit {
     console.log("onUploadError: ", e);
   }
   
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-  
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
-
 
 }

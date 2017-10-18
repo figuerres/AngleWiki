@@ -1,7 +1,7 @@
 
 
 import { Injectable} from '@angular/core';
-import { HttpClient,   HttpResponse , HttpRequest, HttpHeaders , HttpParams } from '@angular/common/http';
+import { HttpClient,   HttpResponse , HttpRequest, HttpHeaders , HttpParams, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
 
@@ -12,13 +12,21 @@ export class WikiFilesService {
     private http: HttpClient
   ) { }
 
-  public  UploadFiles(files:File[])  {
+  public  UploadFiles(files:File[]) : Observable<HttpEvent<HttpRequest<FormData>>> {
     let url = this.serviceBase + 'assets';
     const formData:FormData = new FormData();
     for (let file of files) {
+      console.log("file: ", file.name);
       formData.append('file', file, file.name );
     }
-    return this.http.post( url, FormData,{reportProgress: true} ) ;
+
+    const req = new HttpRequest<FormData>('POST', url, formData, {
+      reportProgress: true, responseType: 'text'
+    });
+    return  this.http.request<HttpRequest<FormData>>( req);
+
+    //  this.http.request().subscribe(e => {   e.})
+    //return this.http.post( url, FormData,{reportProgress: true} )  ;
   }
 
   
