@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Output, Input, HostListener, EventEmitter } from '@angular/core';
-import { ngf } from "./ngf.directive"
+
 
 @Directive({
   selector: '[ngfSelect]'

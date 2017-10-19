@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { HttpClient,   HttpResponse , HttpRequest, HttpHeaders , HttpParams, HttpEventType,HttpProgressEvent  } from '@angular/common/http';
 
-import { ngfSelect,   ngfBackground,  } from '../shared/ngf'
+import { ngfSelect,   ngfBackground  } from '../shared/ngf'
 
 import { WikiFilesService } from '../services/wiki-files.service';
 import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc, IWikiFile }  from '../types/Wiki-Interfaces';
