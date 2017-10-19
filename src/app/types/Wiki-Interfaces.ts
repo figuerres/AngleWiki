@@ -58,3 +58,9 @@
         children: IWikiToc[];
     }
 
+    export interface IWikiFile {
+        id: number;
+        fileName: string;
+        mimeType: string;
+        createdDate: Date;
+    }

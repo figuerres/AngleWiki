@@ -33,6 +33,9 @@ export class ngfSelect  {
       filesList.push(file)
     }
     this.filesChange.emit( filesList );
+    event.preventDefault();
+    event.stopPropagation();
+    this.element.nativeElement.value = '';
   }
 
 }

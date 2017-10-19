@@ -19,7 +19,7 @@ import { TypeaheadModule, ProgressbarModule, AlertModule, AccordionModule } from
 import { TabsModule } from 'ngx-bootstrap';
 import { MarkdownModule } from 'angular2-markdown';
 import { TreeModule } from 'angular-tree-component';
-
+import {BusyModule} from 'angular2-busy';
 
 import { WikiPagesService } from './services/wiki-pages.service';
 import { WikiFilesService } from './services/wiki-files.service';
@@ -46,6 +46,7 @@ import { ngfModule  } from './shared/ngf/ngf.module'
 
 import { AdlGlobalAuth } from './shared/adl-global-auth.service';
 import { AdlGlobalConfig } from './shared/adl-global-config.service';
+import { AuthGuardService   } from './shared/adl-global-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { AdlGlobalConfig } from './shared/adl-global-config.service';
     MarkdownModule,
     TreeModule,
     RouterModule.forRoot(appRoutes),
-    ngfModule
+    ngfModule,
+    BusyModule
   ],
   providers: [
     WikiPagesService,
@@ -92,7 +94,8 @@ import { AdlGlobalConfig } from './shared/adl-global-config.service';
       multi: true,
     },
     AdlGlobalAuth,
-    AdlGlobalConfig
+    AdlGlobalConfig,
+    AuthGuardService 
   ],
   bootstrap: [AppComponent]
 })

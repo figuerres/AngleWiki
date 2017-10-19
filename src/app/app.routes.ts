@@ -4,6 +4,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent   } from './login/login.component';
 
+import { AuthGuardService   } from './shared/adl-global-auth-guard.service';
+
 import { HomeComponent } from './home/home.component';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { CategoriesComponent } from './categories/categories.component';
@@ -19,6 +21,11 @@ export const appRoutes: Routes = [
             {
                 path: '',
                 component: HomeComponent
+            },
+            {
+                path: 'home',
+                component: HomeComponent,
+                canActivate:[AuthGuardService],
             },
             {
                 path: 'categories',

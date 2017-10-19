@@ -23,6 +23,7 @@
     "@angular/router": "^4.2.4",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.2",
     "angular-tree-component": "^5.0.0",
+    "angular2-busy": "^2.0.4",
     "angular2-markdown": "^1.6.0",
     "angular2-modal": "^3.0.3",
     "babel-polyfill": "^6.26.0",

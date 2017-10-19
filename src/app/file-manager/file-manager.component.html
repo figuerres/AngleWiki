@@ -6,7 +6,7 @@
     .another-file-over-class { border: dotted 3px green; }
     html, body { height: 100%; }
     .previewIcon{
-      width:100px;height:100px;
+      width:50px;height:50px;
       background-size:cover;
       background-repeat:no-repeat;
     }
@@ -38,8 +38,7 @@
                         <input type="file"
                          ngfSelect 
                           multiple 
-                          (filesChange)    = "filesChange($event)"
-                         
+                          (filesChange)  = "filesChange($event)"
                           /><br/>
                     </div>
                 </div>
@@ -48,7 +47,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">Files On Server</div>
                 <div class="panel-body">
-                    <table class="table table-hover">
+                    <table *ngIf="WikiFiles" class="table table-hover">
                         <thead>
                             <tr>
                                 <th>
@@ -60,92 +59,47 @@
                                 <th>
                                     type
                                 </th>
+                                <th>
+                                    date uploaded
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr  *ngFor="let item of WikiFiles"  >
                                 <th scope="row">
-                                    1
+                                    {{item.id}}
                                 </th>
                                 <td>
-                                    name
+                                    <div *ngIf="['image/png','image/jpeg'].indexOf(item.mimeType)>=0">
+                                        <img  src="https://devwebservice.adldelivery.com/wikiapi/assets/{{item.fileName}}"   width='50' height='50'   />
+                                    </div>
+                                    {{item.fileName}}
                                 </td>
                                 <td>
-                                    type
+                                    {{item.mimeType}}
+                                </td>
+                                <td>
+                                    {{item.createdDate}}
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">
-                                    2
-                                </th>
-                                <td>
-                                    name
-                                </td>
-                                <td>
-                                    type
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    3
-                                </th>
-                                <td>
-                                    name
-                                </td>
-                                <td>
-                                    type
-                                </td>
-                            </tr>
-                            <tr>
-                                    <th scope="row">
-                                        4
-                                    </th>
-                                    <td>
-                                        name
-                                    </td>
-                                    <td>
-                                        type
-                                    </td>
-                                </tr>
-                                <tr>
-                                        <th scope="row">
-                                            5
-                                        </th>
-                                        <td>
-                                            name
-                                        </td>
-                                        <td>
-                                            type
-                                        </td>
-                                    </tr>                                
-
-
-
-
-
-
-                        </tbody>  
+                        </tbody>
                     </table>
                 </div>
             </div>       
        </div> 
     </div>
     <div class="row">
-     
         <div class="col-md-12" style="margin-bottom: 40px">
             <div class="panel panel-info">
                 <div class="panel-heading">Upload queue</div>
                 <div class="panel-body">
                     <p>Queue length: {{ files?.length }}</p>
-                  
                     <table class="table">
                         <thead>
                         <tr>
                             <th width="50%">Name</th>
                             <th>Size</th>
-                            <th>Progress</th>
                             <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -156,27 +110,15 @@
                                 </div>
                                 <strong> {{ item?.name }} </strong>
                             </td>
-                            <td  nowrap>{{ item?.size/1024/1024 | number:'.2' }} MB</td>
-                            <td >
-                                <div class="progress" style="margin-bottom: 0;">
-                                 <!--   <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div> -->
-                                </div>
-                            </td>
+                            <td  nowrap>{{ item?.size/1024 | number:'.2' }} KB</td>
                             <td class="text-center">
                                 <span ><i class="glyphicon glyphicon-ok"></i></span>
                                 <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                                 <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                             </td>
-                            <td nowrap>
-                                <button type="button" class="btn btn-success btn-xs"  (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"> <span class="glyphicon glyphicon-upload"></span> Upload</button>
-                                <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading"> <span class="glyphicon glyphicon-ban-circle"></span> Cancel </button>
-                                <button type="button" class="btn btn-danger btn-xs"  (click)="item.remove()"> <span class="glyphicon glyphicon-trash"></span> Remove  </button>
-                            </td>
                         </tr>
                         </tbody>
                     </table>
-              
-                
                     <div>
                         <div>
                             Queue progress:

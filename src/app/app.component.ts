@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-
 import { AdlGlobalConfig } from './shared/adl-global-config.service';
 import { AdlGlobalAuth } from './shared/adl-global-auth.service';
 
@@ -45,4 +44,29 @@ export class AppComponent implements OnInit  {
         this.user = null;
       });
   }
+
+
+  userSignOut(){
+    this.authService.mgr.signoutPopup().then(function() {
+        console.log(" signed out ");
+    }).catch(function(err) {
+        console.log(err);
+    });
+
+  }
+
+  revoke(){
+      this.authService.revokeToken();
+  }
+
+
+  //
+  // clean up on exit.
+  //
+  ngOnDestroy(){
+      if(this.loadedUserSub.unsubscribe()){
+          this.loadedUserSub.unsubscribe();
+      }
+  }
+
 }
