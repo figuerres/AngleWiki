@@ -47,6 +47,8 @@ import { ngfModule  } from './shared/ngf/ngf.module'
 import { AdlGlobalAuth } from './shared/adl-global-auth.service';
 import { AdlGlobalConfig } from './shared/adl-global-config.service';
 import { AuthGuardService   } from './shared/adl-global-auth-guard.service';
+import { AdlGlobalUser   } from './shared/adl-global-user.service';
+
 
 @NgModule({
   declarations: [
@@ -95,7 +97,8 @@ import { AuthGuardService   } from './shared/adl-global-auth-guard.service';
     },
     AdlGlobalAuth,
     AdlGlobalConfig,
-    AuthGuardService 
+    AuthGuardService ,
+    AdlGlobalUser
   ],
   bootstrap: [AppComponent]
 })

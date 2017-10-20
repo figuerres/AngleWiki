@@ -33,7 +33,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'wiki',
-                   component: WikiListComponent
+                component: WikiListComponent
             },
             {
                 path: 'wiki/:wikiId/:wikiTitle', 
@@ -43,23 +43,24 @@ export const appRoutes: Routes = [
                 path: 'wikitoc/:wikiId', 
                 component: PagesComponent  
             },
-                        
             {
                 path: 'wiki/page/:id/:title',
                 component: PageComponent
             },
-
             {
                 path: 'newpage',
-                component: NewPageComponent
+                component: NewPageComponent,
+                canActivate:[AuthGuardService],
             },
             {
                 path: 'filemanager',
-                component: FileManagerComponent
+                component: FileManagerComponent,
+                canActivate:[AuthGuardService],
             },
             {
                 path: 'settings',
-                component: SettingsComponent
+                component: SettingsComponent,
+                canActivate:[AuthGuardService],
             },
             {
                 path: 'unauthorized',

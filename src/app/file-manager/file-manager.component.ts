@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HttpClient,   HttpResponse , HttpRequest, HttpHeaders , HttpParams, HttpEventType,HttpProgressEvent  } from '@angular/common/http';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { ngfSelect,   ngfBackground  } from '../shared/ngf'
 
 import { WikiFilesService } from '../services/wiki-files.service';
 import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc, IWikiFile }  from '../types/Wiki-Interfaces';
+
+import { AdlGlobalUser   } from '../shared/adl-global-user.service';
 
 @Component({
   selector: 'app-file-manager',
@@ -34,10 +37,21 @@ export class FileManagerComponent implements OnInit {
 
  public WikiFiles: IWikiFile[] ;
 
-  constructor( private FilesService :WikiFilesService ) { 
+  constructor(
+    private router: Router, 
+     private FilesService :WikiFilesService ,
+     private AdlUser: AdlGlobalUser) { 
   }
 
   ngOnInit() {
+
+this.AdlUser.loggedIn.subscribe(loggedin => {
+  console.log(" logged in ? ", loggedin);
+if(!loggedin){
+  this.router.navigate(['/']);
+}
+});
+
     this.FilesService.GetFileList().subscribe (data => {
       this.WikiFiles = data;
     });

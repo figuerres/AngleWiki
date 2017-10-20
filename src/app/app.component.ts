@@ -49,6 +49,7 @@ export class AppComponent implements OnInit  {
   userSignOut(){
     this.authService.mgr.signoutPopup().then(function() {
         console.log(" signed out ");
+   //     this.router.navigate(['/']);
     }).catch(function(err) {
         console.log(err);
     });
