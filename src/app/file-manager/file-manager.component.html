@@ -112,23 +112,24 @@
                                 <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploadProgress + '%' }"></div>
                             </div>
                         </div>
+                        
                         <button type="button" 
                         class="btn btn-success btn-s" 
                         (click)="uploadAll()" [disabled]="!files.length">
                          <span class="glyphicon glyphicon-upload"></span> Upload all </button>
-<button type="button" 
-class="btn btn-warning btn-s" 
-(click)="cancelAll()" 
-[disabled]="!files.length"> 
-<span class="glyphicon glyphicon-ban-circle"></span> Cancel all </button>
 
-<button type="button" 
-class="btn btn-danger btn-s" 
-(click)="clearQueue()" 
-[disabled]="!files.length"> 
-<span class="glyphicon glyphicon-trash"></span> Remove all</button>
+                        <button type="button" 
+                        class="btn btn-warning btn-s" 
+                        (click)="cancelAll()" 
+                        [disabled]="!files.length"> 
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel all </button>
 
-               
+                        <button type="button" 
+                        class="btn btn-danger btn-s" 
+                        (click)="clearQueue()" 
+                        [disabled]="!files.length"> 
+                        <span class="glyphicon glyphicon-trash"></span> Remove all</button>
+
                     </div>
                 </div>
             </div>

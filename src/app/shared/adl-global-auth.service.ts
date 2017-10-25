@@ -27,7 +27,7 @@ export class AdlGlobalAuth {
 
     //// To turn on the logger uncomment the below line
     //// will give many details of the auth process...
-    Log.logger = <any>console;
+   // Log.logger = <any>console;
     this.storage = sessionStorage;  
     this.settings = this.configService.Settings;
     this.mgr = new UserManager(this.settings.userManagerSettings);

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 
 import { HttpClient,   HttpResponse , HttpRequest, HttpHeaders , HttpParams, HttpEventType,HttpProgressEvent  } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
+import { ISubscription} from 'rxjs/Subscription'
 
 import { ngfSelect,   ngfBackground  } from '../shared/ngf'
 
@@ -29,13 +31,12 @@ import { AdlGlobalUser   } from '../shared/adl-global-user.service';
 //  https://devwebservice.adldelivery.com/wikiapi/assets/trak2.png
 //
 
-export class FileManagerComponent implements OnInit {
-
+export class FileManagerComponent implements OnInit , OnDestroy{
   public files:Array<File> = new Array<File>();
-
- public uploadProgress: number = 0;
-
- public WikiFiles: IWikiFile[] ;
+  public uploadProgress: number = 0;
+  public WikiFiles: IWikiFile[] ;
+  private userLoggedInSubscription : ISubscription;
+  private userSubscription : ISubscription;
 
   constructor(
     private router: Router, 
@@ -45,20 +46,28 @@ export class FileManagerComponent implements OnInit {
 
   ngOnInit() {
 
-this.AdlUser.loggedIn.subscribe(loggedin => {
-  console.log(" logged in ? ", loggedin);
-if(!loggedin){
-  this.router.navigate(['/']);
-}
-});
+    this.userLoggedInSubscription  =  this.AdlUser.loggedIn.subscribe(loggedin => {
+      console.log(" logged in ? ", loggedin);
+      if(!loggedin){
+        this.router.navigate(['/']);
+      }
+    });
+
+    this.userSubscription = this.AdlUser.user.subscribe( u => {
+      console.log("user is : ", u);
+    });
 
     this.FilesService.GetFileList().subscribe (data => {
       this.WikiFiles = data;
     });
   }
 
+  ngOnDestroy() {
+    this.userLoggedInSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+  }
+
   public filesChange(e: any){
-   // console.log("filesChange: ", e);
     let  filesList:Array<File> =  e as  Array<File>;
     for (let file of filesList) {
       this.files.push(file);
