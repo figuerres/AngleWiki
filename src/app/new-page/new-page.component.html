@@ -1,24 +1,61 @@
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="min-height: 900px; "  >
       <div class="col-md-6">
-          <div  class="panel panel-info">
-              <div class="panel-heading">New Page:</div>
-              <div class="panel-body">
-                title:<br>
-                tags:<br>
-          <textarea rows="20"
-           [(ngModel)]="textData"
-          ></textarea>
-         </div>
-        </div>
+<form (ngSubmit)="onSubmit()" #newPageForm="ngForm"  >
+
+            <div class="form-group">
+                <label for="wikiId">Wiki</label>
+                <select  *ngIf='wikiList' id="wikiId"
+                 (change)="onWikiChange($event)"
+                 [(ngModel)]="wikiPage.wikiId"  name="wikiId" #wikiId="ngModel" 
+                  class="form-control"  required >
+                  <option value="0" >--Select Wiki--</option>
+                  <option *ngFor="let w of wikiList" value={{w.id}} >{{w.title}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                  <label for="pageParentId">Parent Page</label>
+                  <select   id="pageParentId"
+                  [(ngModel)]="wikiPage.parentPageId" name="parentPageId" #parentPageId="ngModel"  
+                  class="form-control"  >
+                    <option value="0" >--Select Parent--</option>
+                    <option *ngFor="let w of pagesList" value={{w.id}} >{{w.title}}</option>
+                  </select>
+            </div>
+
+          <div class="form-group">
+              <label for="pagetitle">Title</label>
+              <input  id="pagetitle"
+              [(ngModel)]="wikiPage.title" 
+              name="title" #title="ngModel" 
+              type="text" class="form-control" placeholder="page title here" required  >
+          </div>
+          <!--
+          <div class="form-group">
+              <span class="input-group-addon" id="pagetags">Tags</span>
+              <input [(ngModel)]="wikiPage.name" name="name" #name="ngModel" type="text" type="text" class="form-control" placeholder="tag1,tag2,tag3" aria-describedby="pagetags">
+          </div>
+        -->
+        <div class="form-group">
+            <label for="content">Page Content</label>
+          <textarea rows="20"  id="content"
+          [(ngModel)]="wikiPage.pageContent"  
+          name="pageContent" #pageContent="ngModel"  
+           type="text" required ></textarea>
+       </div>
+          <button type="submit" class="btn btn-success" [disabled]="!newPageForm.form.valid">Submit</button>
+          <button type="button" class="btn btn-default" (click)="newPage(); newPageForm.reset()">New Page</button>
+
+</form>
 
       </div>
       <div class="col-md-6">
           <div  class="panel panel-info">
               <div class="panel-heading">Preview:</div>
               <div class="panel-body">
-          <markdown [data]="textData"></markdown>
+          <markdown [data]="wikiPage.pageContent"></markdown>
               </div>
             </div>
       </div>

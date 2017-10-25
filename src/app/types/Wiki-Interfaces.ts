@@ -26,6 +26,14 @@
         pageContent: string;
     }
 
+    export interface IPageEdit {
+        id: number;
+        wikiId: number;
+        parentPageId?: any;
+        title: string;
+        pageContent: string;
+    }
+
     export interface ITag {
         id: number;
         createdBy: number;

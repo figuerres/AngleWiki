@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MarkdownModule } from 'angular2-markdown';
+import { MarkdownComponent, MarkdownService } from 'angular2-markdown';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
@@ -14,15 +14,27 @@ import { WikiPagesService } from '../services/wiki-pages.service';
 })
 export class PageComponent implements OnInit {
 
-  constructor(
-    private router: Router, 
-    private route: ActivatedRoute,
-   private wikiPagesService:  WikiPagesService
-   ) { }
-
    public textData = '## Markdown content data';
    public Title = 'Markdown content data';
    public pageList: IPageSummary[];
+
+  constructor( private router: Router,  private route: ActivatedRoute, private mark : MarkdownService, private wikiPagesService:  WikiPagesService) {
+
+    //
+   // <a [routerLink]="['${href}']" routerLinkActive="active">${text}</a>
+   //
+   //
+
+    this.mark.renderer.link = (href: string,  title: string,  text: string) => {
+      
+      return `<a _ngcontent-c4="" routerlinkactive="active" ng-reflect-router-link="/wiki/page/31/About Us" ng-reflect-router-link-active="active" href="/wiki/page/31/About%20Us">About Us</a>`;
+     // return `<a [routerLink]="['${href}']" routerLinkActive="active">${text}</a>`;
+    // return `<p><hr><br>${href} <br>${title}<br>${text}<br><hr></p>`;
+
+    };
+
+
+  }
 
   ngOnInit( ) {
 

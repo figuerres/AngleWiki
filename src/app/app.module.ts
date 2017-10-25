@@ -17,7 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { TypeaheadModule, ProgressbarModule, AlertModule, AccordionModule } from 'ngx-bootstrap';
 import { TabsModule } from 'ngx-bootstrap';
-import { MarkdownModule } from 'angular2-markdown';
+import { MarkdownModule, MarkdownService } from 'angular2-markdown';
 import { TreeModule } from 'angular-tree-component';
 import {BusyModule} from 'angular2-busy';
 
@@ -81,13 +81,14 @@ import { AdlGlobalUser   } from './shared/adl-global-user.service';
     AlertModule.forRoot(),
     TabsModule.forRoot(),
     ReactiveFormsModule,
-    MarkdownModule,
+    MarkdownModule.forRoot(),
     TreeModule,
     RouterModule.forRoot(appRoutes),
     ngfModule,
     BusyModule
   ],
   providers: [
+    MarkdownService,
     WikiPagesService,
     WikiFilesService,
     {
