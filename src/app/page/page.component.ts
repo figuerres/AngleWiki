@@ -26,8 +26,12 @@ export class PageComponent implements OnInit {
    //
 
     this.mark.renderer.link = (href: string,  title: string,  text: string) => {
-      
-      return `<a _ngcontent-c4="" routerlinkactive="active" ng-reflect-router-link="/wiki/page/31/About Us" ng-reflect-router-link-active="active" href="/wiki/page/31/About%20Us">About Us</a>`;
+      if( href.startsWith("~")){
+        let u_str = href.replace("~","");
+      return `<a _ngcontent-c4="" routerlinkactive="active" ng-reflect-router-link="${u_str}" ng-reflect-router-link-active="active" href="${u_str}">${text}</a>`;
+    }else{
+      return `<a  href="${href}">${text}</a>`;      
+    }
      // return `<a [routerLink]="['${href}']" routerLinkActive="active">${text}</a>`;
     // return `<p><hr><br>${href} <br>${title}<br>${text}<br><hr></p>`;
 
