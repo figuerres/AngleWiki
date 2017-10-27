@@ -30,7 +30,7 @@ export class PageComponent implements OnInit {
         let u_str = href.replace("~","");
       return `<a _ngcontent-c4="" routerlinkactive="active" ng-reflect-router-link="${u_str}" ng-reflect-router-link-active="active" href="${u_str}">${text}</a>`;
     }else{
-      return `<a  href="${href}">${text}</a>`;      
+      return `<a href="${href}">${text}</a>`;      
     }
      // return `<a [routerLink]="['${href}']" routerLinkActive="active">${text}</a>`;
     // return `<p><hr><br>${href} <br>${title}<br>${text}<br><hr></p>`;
