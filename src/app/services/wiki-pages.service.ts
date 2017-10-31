@@ -11,36 +11,35 @@ import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc }  from '../typ
 import { IOData } from '../types/odata.interface'
 //import { AdlLoggerService } from '../shared/adl-logger.service';
 
+import { AdlGlobalConfig } from '../shared/adl-global-config.service';
+import { IDeploymentEnvironment } from   '../shared/iappconfig.interface';
 
 @Injectable()
 export class WikiPagesService {
 
-   public serviceBase : string = 'https://devwebservice.adldelivery.com/wikiapi/';
-   //public serviceBase : string = 'https://localhost:44305/wikiapi/';
-
-  constructor( private http: HttpClient ) {
+  constructor( private http: HttpClient, private configService: AdlGlobalConfig  ) {
   }
 
   public  getWikiList(): Observable<IWiki[]> {
-    let url = this.serviceBase + 'Wikis';
+    let url = this.configService.Settings.odataApiUrl + 'Wikis';
     return this.http.get(url)
     .map(r =>  (r as IOData).value as IWiki[]);  
   }
 
   // Wikis?$select=id%2Ctitle&$orderby=title
   public  getWikiNameList(): Observable<IWikiName[]> {
-    let url = this.serviceBase + 'Wikis?$select=id,title&$orderby=title';
+    let url = this.configService.Settings.odataApiUrl + 'Wikis?$select=id,title&$orderby=title';
     return this.http.get(url) 
     .map(r => (r as IOData).value as IWikiName[] );
   }
 
   public  getWiki(wikiId: number): Observable<IWiki> { 
-    let url = this.serviceBase + 'Wikis(' + wikiId +')' ; 
+    let url = this.configService.Settings.odataApiUrl  + 'Wikis(' + wikiId +')' ; 
     return this.http.get<IWiki>(url);
   }
 
   public  getWikiPageList(wikiId: number): Observable<IPageSummary[]> {
-    let url = this.serviceBase + 'Pages?$expand=wiki($select=title)&$filter=wikiId eq ' + wikiId +'&$select=wikiId,id,title&$orderby=title';
+    let url = this.configService.Settings.odataApiUrl  + 'Pages?$expand=wiki($select=title)&$filter=wikiId eq ' + wikiId +'&$select=wikiId,id,title&$orderby=title';
     return this.http.get(url).map(r => (r as IOData).value as IPageSummary[] );
   }
 
@@ -50,12 +49,12 @@ export class WikiPagesService {
   //   .catch(error => this.handleError(error,url) );
 
   public  getWikiPage(pageId: number): Observable<IPage> {
-    let url = this.serviceBase + '/Pages(' + pageId +')' ;
+    let url = this.configService.Settings.odataApiUrl  + '/Pages(' + pageId +')' ;
     return this.http.get<IPage>(url);
   }
 
   public  getWikiToc(WikiId: number): Observable<IWikiToc> {
-    let url = this.serviceBase + '/toc/WikiToc/' + WikiId +'' ;
+    let url = this.configService.Settings.apiUrl  + '/toc/WikiToc/' + WikiId +'' ;
     return this.http.get<IWikiToc>(url);
   }
 

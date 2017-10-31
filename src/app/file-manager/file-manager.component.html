@@ -12,16 +12,27 @@
     }
   </style>
 
-
 <div class="container-fluid">
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="wikiId">Wiki</label>
+                <select  *ngIf='wikiList' id="wikiId"
+                    (change)="onWikiChange($event)"
+                     
+                    class="form-control"  required >
+                    <option value="0" >--Select Wiki--</option>
+                    <option *ngFor="let w of wikiList" value={{w.id}} >{{w.title}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-3">
-            
             <div class="panel panel-info">
-                    <div class="panel-heading">File Select Dialog</div>
+                    <div class="panel-heading">Select Files to Upload</div>
                     <div class="panel-body">
-                        Multiple
-                        <input type="file"
+                        <input type="file" [disabled]="currentWikiId==0"
                          ngfSelect 
                           multiple 
                           (filesChange)  = "filesChange($event)"
@@ -57,7 +68,9 @@
                                 </th>
                                 <td>
                                     <div *ngIf="['image/png','image/jpeg'].indexOf(item.mimeType)>=0">
-                                        <img  src="https://devwebservice.adldelivery.com/wikiapi/assets/{{item.fileName}}"   width='50' height='50'   />
+                                      <!--  src="https://wiki.adldelivery.com/wikifile/{{item.wikiId}}/{{item.fileName}}" -->
+                                      <!-- src="https://localhost:44309/wikifile/{{item.wikiId}}/{{item.fileName}}"   -->
+                                        <img  src="https://wiki.adldelivery.com/wikifile/{{item.wikiId}}/{{item.fileName}}"   width='50' height='50'   />
                                     </div>
                                     {{item.fileName}}
                                 </td>
@@ -115,7 +128,7 @@
                         
                         <button type="button" 
                         class="btn btn-success btn-s" 
-                        (click)="uploadAll()" [disabled]="!files.length">
+                        (click)="uploadAll()" [disabled]="!files.length || currentWikiId==0">
                          <span class="glyphicon glyphicon-upload"></span> Upload all </button>
 
                         <button type="button" 

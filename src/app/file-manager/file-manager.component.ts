@@ -10,6 +10,7 @@ import { ngfSelect,   ngfBackground  } from '../shared/ngf'
 import { WikiFilesService } from '../services/wiki-files.service';
 import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc, IWikiFile }  from '../types/Wiki-Interfaces';
 
+import { WikiPagesService } from '../services/wiki-pages.service';
 import { AdlGlobalUser   } from '../shared/adl-global-user.service';
 
 @Component({
@@ -37,10 +38,13 @@ export class FileManagerComponent implements OnInit , OnDestroy{
   public WikiFiles: IWikiFile[] ;
   private userLoggedInSubscription : ISubscription;
   private userSubscription : ISubscription;
-
+  public wikiList: IWikiName[];
+  private currentWikiId: number = 0;
+  
   constructor(
-    private router: Router, 
+     private router: Router, 
      private FilesService :WikiFilesService ,
+     private wikiPagesService:  WikiPagesService,
      private AdlUser: AdlGlobalUser) { 
   }
 
@@ -57,10 +61,29 @@ export class FileManagerComponent implements OnInit , OnDestroy{
       console.log("user is : ", u);
     });
 
-    this.FilesService.GetFileList().subscribe (data => {
-      this.WikiFiles = data;
+    this.wikiPagesService.getWikiNameList().subscribe(w =>{
+      console.log(' wiki = ' ,w);
+     this.wikiList = w;
     });
+
   }
+
+  onWikiChange(event:Event){
+    let wid = + (event.target as HTMLSelectElement).value;
+    if(wid>0){
+      this.currentWikiId = wid;
+      this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
+        this.WikiFiles = data;
+      });
+    }
+    else{
+      this.currentWikiId = 0;
+      this.WikiFiles = null;
+    }
+  }
+  
+
+
 
   ngOnDestroy() {
     this.userLoggedInSubscription.unsubscribe();
@@ -75,7 +98,7 @@ export class FileManagerComponent implements OnInit , OnDestroy{
   }
 
   public uploadAll(){
-    this.FilesService.UploadFiles(  this.files ).subscribe(event  =>{
+    this.FilesService.UploadFiles( this.files , this.currentWikiId ).subscribe(event  =>{
       if (event.type === HttpEventType.UploadProgress) {
         console.log("Upload progress event", event);
         // This is an upload progress event. Compute and show the % done:
@@ -89,7 +112,7 @@ export class FileManagerComponent implements OnInit , OnDestroy{
           this.uploadProgress = 0;
           this.files = new Array<File>();
           console.log('File(s) are completely uploaded!');
-          this.FilesService.GetFileList().subscribe (data => {
+          this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
             this.WikiFiles = data;
             });          
         } else {

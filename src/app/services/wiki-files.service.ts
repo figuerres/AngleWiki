@@ -7,19 +7,21 @@ import { Observable } from 'rxjs/Rx';
 import { IWikiFile }  from '../types/Wiki-Interfaces';
 import { IOData } from '../types/odata.interface'
 
+
+import { AdlGlobalConfig } from '../shared/adl-global-config.service';
+import { IDeploymentEnvironment } from   '../shared/iappconfig.interface';
+
 @Injectable()
 export class WikiFilesService {
- // public serviceBase : string =  'https://localhost:44305/wikiapi/'; //  'https://devwebservice.adldelivery.com/wikiapi/';
-  public serviceBase : string = 'https://devwebservice.adldelivery.com/wikiapi/';
-  
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,  private configService: AdlGlobalConfig 
   ) { }
 
-  public  UploadFiles(files:File[]) : Observable<HttpEvent<HttpRequest<FormData>>> {
-    let url = this.serviceBase + 'assets';
+  public  UploadFiles(files:File[], wikiId: number ) : Observable<HttpEvent<HttpRequest<FormData>>> {
+    let url = this.configService.Settings.fileApiUrl ;
     const formData:FormData = new FormData();
+    formData.append("wikiId", wikiId.toString() );
     for (let file of files) {
     //  console.log("file: ", file.name);
       formData.append('file', file, file.name );
@@ -31,10 +33,15 @@ export class WikiFilesService {
     return  this.http.request<HttpRequest<FormData>>( req);
   }
 
-public GetFileList( )  : Observable<IWikiFile[]>{
- // https://devwebservice.adldelivery.com/wikiapi/Files?$select=id%2CfileName%2CmimeType%2CcreatedDate%2C&$orderby=createdDate%20desc
+public GetFileList(wikiId: number)  : Observable<IWikiFile[]>{
+  //
+  //  $filter=wikiId%20%20eq%201
+ //  https://devwebservice.adldelivery.com/wikiapi/Files?$select=id%2CfileName%2CmimeType%2CcreatedDate%2C&$orderby=createdDate%20desc
+ //
+ //  https://localhost:44309/wikiapi/Files?$filter=wikiId%20%20eq%201&$select=id%2CfileName%2CmimeType%2CcreatedDate&$orderby=createdDate%20desc
+ //
 
- let url = this.serviceBase + 'Files?$select=id%2CfileName%2CmimeType%2CcreatedDate%2C&$orderby=createdDate%20desc';
+ let url = this.configService.Settings.odataApiUrl + 'Files?$filter=wikiId eq ' + wikiId + '&$select=id,wikiId,fileName,mimeType,createdDate&$orderby=createdDate desc';
  return this.http.get(url) 
  .map(r => (r as IOData).value as IWikiFile[] );
 
