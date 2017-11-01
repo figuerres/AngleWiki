@@ -7,7 +7,7 @@ import {HttpClient  , HttpResponse , HttpRequest, HttpHeaders  } from '@angular/
 
 import { Observable } from 'rxjs/Rx';
 
-import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc }  from '../types/Wiki-Interfaces';
+import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc  , IPageEdit }  from '../types/Wiki-Interfaces';
 import { IOData } from '../types/odata.interface'
 //import { AdlLoggerService } from '../shared/adl-logger.service';
 
@@ -57,6 +57,17 @@ export class WikiPagesService {
     let url = this.configService.Settings.apiUrl  + '/toc/WikiToc/' + WikiId +'' ;
     return this.http.get<IWikiToc>(url);
   }
+
+public addWikiPage( page:IPageEdit ): Observable<IPage>   {
+  let url = this.configService.Settings.odataApiUrl  + '/Pages' ;
+  return this.http.post<IPage>(url, page);
+
+}
+
+
+
+
+
 
   private handleError(error: Response, url:string) {
     // in a real world app, we may send the server to some remote logging infrastructure

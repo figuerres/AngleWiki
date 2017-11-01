@@ -24,6 +24,7 @@ export class NewPageComponent implements OnInit {
     "title": "",
     "pageContent": ""
   }
+  public page : IPage;
 
  public pagesList: IPageSummary[];
 
@@ -31,8 +32,6 @@ export class NewPageComponent implements OnInit {
   constructor(
     private wikiPagesService:  WikiPagesService
     ) { }
-
-
 
   ngOnInit() {
  this.wikiPagesService.getWikiNameList().subscribe(w =>{
@@ -51,9 +50,12 @@ onWikiChange(event:Event){
 }
 
 
-
-
-obSubmit(){
+onSubmit(){
+  this. wikiPagesService.addWikiPage(this.wikiPage).subscribe(p=>{
+this.page = p;
+console.log("new page saved: ",this.page);
+this.newPage();
+  });
 
 }
 
