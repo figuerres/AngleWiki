@@ -32,15 +32,13 @@ import { FileManagerComponent } from './file-manager/file-manager.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { PagesComponent } from './pages/pages.component';
 import { SettingsComponent } from './settings/settings.component';
-import { NewPageComponent } from './new-page/new-page.component';
+import { EditPageComponent } from './edit-page/edit-page.component';
 import { HomeComponent } from './home/home.component';
 import { PageComponent } from './page/page.component';
-//  import { WikiComponent } from './wiki/wiki.component';
 
 import { WikiListComponent } from './wiki-list/wiki-list.component';
 import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 
-//import { AdlLoggerService } from './shared/adl-logger.service';
 import { AdlGlobalInterceptor } from './shared/adl-global-interceptor.service';
 import { ngfModule  } from './shared/ngf/ngf.module'
 
@@ -49,6 +47,9 @@ import { AdlGlobalConfig } from './shared/adl-global-config.service';
 import { AuthGuardService   } from './shared/adl-global-auth-guard.service';
 import { AdlGlobalUser   } from './shared/adl-global-user.service';
 
+//
+//  RouterModule.forRoot(appRoutes, { enableTracing: true }),
+//
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { AdlGlobalUser   } from './shared/adl-global-user.service';
     CategoriesComponent,
     PagesComponent,
     SettingsComponent,
-    NewPageComponent,
+    EditPageComponent,
     HomeComponent,
     PageComponent,
     WikiListComponent,
@@ -83,7 +84,7 @@ import { AdlGlobalUser   } from './shared/adl-global-user.service';
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
     TreeModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes ),
     ngfModule,
     BusyModule
   ],

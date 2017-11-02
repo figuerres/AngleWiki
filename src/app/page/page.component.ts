@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { MarkdownComponent, MarkdownService } from 'angular2-markdown';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { ISubscription} from 'rxjs/Subscription'
+import {Subscription} from 'rxjs';
 
 import { IWiki , IPage , ITag,IPageSummary  }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
-
+import { AdlGlobalUser   } from '../shared/adl-global-user.service';
+import { User } from 'oidc-client';
 
 @Component({
   selector: 'app-page',
@@ -14,16 +16,24 @@ import { WikiPagesService } from '../services/wiki-pages.service';
 })
 export class PageComponent implements OnInit {
 
-   public textData = '## Markdown content data';
-   public Title = 'Markdown content data';
+   //public textData = '## Markdown content data';
+   //public Title = 'Markdown content data';
    public pageList: IPageSummary[];
 
-  constructor( private router: Router,  private route: ActivatedRoute, private mark : MarkdownService, private wikiPagesService:  WikiPagesService) {
+   public page : IPage;
+   private userLoggedInSubscription : ISubscription;
+   private userSubscription : ISubscription;
+   private user: User;
+   busy: Subscription;
 
-    //
-   // <a [routerLink]="['${href}']" routerLinkActive="active">${text}</a>
-   //
-   //
+
+  constructor( 
+    private router: Router,  
+    private route: ActivatedRoute, 
+    private mark : MarkdownService,
+    private wikiPagesService:  WikiPagesService,
+    private AdlUser: AdlGlobalUser
+  ) {
 
     this.mark.renderer.link = (href: string,  title: string,  text: string) => {
       if( href.startsWith("~")){
@@ -32,9 +42,6 @@ export class PageComponent implements OnInit {
     }else{
       return `<a href="${href}">${text}</a>`;      
     }
-     // return `<a [routerLink]="['${href}']" routerLinkActive="active">${text}</a>`;
-    // return `<p><hr><br>${href} <br>${title}<br>${text}<br><hr></p>`;
-
     };
 
 
@@ -42,26 +49,34 @@ export class PageComponent implements OnInit {
 
   ngOnInit( ) {
 
+    this.userSubscription = this.AdlUser.user.subscribe( u => {
+      console.log("user is : ", u);
+      this.user = u;
+    });
 
-//console.log("route param map ",  this.route.snapshot.paramMap );
-    //let id = +this.route.snapshot.paramMap.get('id');
-//console.log(' pageId = ' , id);
 
-    this.route.params.forEach(params =>{
+      this.route.params.forEach(params =>{
       let id = params["id"];
-      this.wikiPagesService.getWikiPage(id).subscribe(page =>{
+      this.busy=  this.wikiPagesService.getWikiPage(id).subscribe(page =>{
         console.log(' page = ' ,page);
         console.log(' content = ' ,page.pageContent);
-        this.textData = page.pageContent;
-        this.Title = page.title;
-      this.wikiPagesService.getWikiPageList(page.wikiId).subscribe(wPages =>{
+        this.page = page;
+        this.wikiPagesService.getWikiPageList(page.wikiId).subscribe(wPages =>{
           console.log(' wiki pages = ' ,wPages);
           this.pageList = wPages;
         });
       });
     });
-
-
   }
+
+  editPage(){
+    this.router.navigate(['/wikipage/edit/' ,  this.page.id,  this.page.title  ]  );
+  }
+
+  ngOnDestroy() {
+    
+    this.userSubscription.unsubscribe();
+  }
+
 
 }

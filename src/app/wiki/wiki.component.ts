@@ -7,7 +7,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { IWiki , IPage , ITag,IPageSummary , IWikiName }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
 
-
+import {Subscription} from 'rxjs';
 
 
 
@@ -29,7 +29,7 @@ export class WikiComponent implements OnInit {
    public wiki: IWiki;
    public wikiList: IWikiName[];
    public pageList: IPageSummary[];
-
+   busy: Subscription;
   ngOnInit() {
 
     var wikiId : number;
@@ -42,7 +42,7 @@ export class WikiComponent implements OnInit {
       //
       console.log(' has param = ' , wikiId);
 
-          this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
+      this.busy=   this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
             console.log(' wiki = ' ,w);
             this.pageTitle = w.title;
             this.wiki = w;
@@ -57,7 +57,7 @@ export class WikiComponent implements OnInit {
       // no id then list the wiki's that are avilible
       //
       console.log('no id get list ' );
-      this.wikiPagesService.getWikiNameList().subscribe(w =>{
+      this.busy=    this.wikiPagesService.getWikiNameList().subscribe(w =>{
         console.log(' wiki = ' ,w);
        this.pageTitle = 'Wiki List';
        this.wikiList = w;

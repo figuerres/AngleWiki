@@ -11,7 +11,7 @@ import { FileManagerComponent } from './file-manager/file-manager.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { PagesComponent } from './pages/pages.component';
 import { SettingsComponent } from './settings/settings.component';
-import { NewPageComponent } from './new-page/new-page.component';
+import { EditPageComponent } from './edit-page/edit-page.component';
 import { PageComponent } from './page/page.component';
 import { WikiListComponent } from './wiki-list/wiki-list.component';
 import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
@@ -35,6 +35,7 @@ export const appRoutes: Routes = [
                 path: 'wiki',
                 component: WikiListComponent
             },
+
             {
                 path: 'wiki/:wikiId/:wikiTitle', 
                 component: WikiTocComponent  
@@ -43,13 +44,19 @@ export const appRoutes: Routes = [
                 path: 'wikitoc/:wikiId', 
                 component: PagesComponent  
             },
+
             {
                 path: 'wiki/page/:id/:title',
                 component: PageComponent
             },
             {
-                path: 'newpage',
-                component: NewPageComponent,
+                path: 'wikipage/add',
+                component: EditPageComponent,
+                canActivate:[AuthGuardService],
+            },
+            {
+                path: 'wikipage/edit/:id/:title',
+                component: EditPageComponent,
                 canActivate:[AuthGuardService],
             },
             {

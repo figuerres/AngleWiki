@@ -1,6 +1,6 @@
-<div class="container-fluid">
+<div [ngBusy]="busy" class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div class="panel panel-info">
         <div class="panel-heading">Wiki Contents</div>
 
@@ -19,14 +19,18 @@
       </div>
     </div>
     <div class="col-md-8">
-      <h1>{{Title}}</h1>
-      <markdown [data]="textData"></markdown>
+      <h1 *ngIf="page" >{{page.title}}</h1>
+      <markdown *ngIf="page" [data]="page.pageContent"></markdown>
     </div>
-    <div class="col-md-1">
+    <div *ngIf="user"   class="col-md-2">
       <div class="panel panel-info">
-        <div class="panel-heading">OTHER</div>
+        <div class="panel-heading">Options </div>
         <div class="panel-body">
-          Panel content
+          <button type="button" 
+          class="btn btn-warning btn-s" 
+          (click)="editPage()" 
+          [disabled]="!page" > 
+          <span class="glyphicon glyphicons-pencil"></span> Edit Page </button>
         </div>
       </div>
     </div>

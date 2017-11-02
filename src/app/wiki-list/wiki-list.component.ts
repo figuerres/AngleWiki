@@ -6,6 +6,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { IWiki , IPage , ITag,IPageSummary , IWikiName }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-wiki-list',
@@ -25,13 +26,13 @@ export class WikiListComponent implements OnInit {
    public wiki: IWiki;
    public wikiList: IWikiName[];
    public pageList: IPageSummary[];
-
+   busy: Subscription;
   ngOnInit() {
       //
       // no id then list the wiki's that are avilible
       //
       console.log('no id get list ' );
-      this.wikiPagesService.getWikiNameList().subscribe(w =>{
+      this.busy=  this.wikiPagesService.getWikiNameList().subscribe(w =>{
         console.log(' wiki = ' ,w);
        this.pageTitle = 'Wiki List';
        this.wikiList = w;

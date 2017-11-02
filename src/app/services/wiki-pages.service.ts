@@ -38,6 +38,16 @@ export class WikiPagesService {
     return this.http.get<IWiki>(url);
   }
 
+  public  deleteWiki(wikiId: number): Observable<any> { 
+    let url = this.configService.Settings.odataApiUrl  + 'Wiki(' + wikiId +')' ; 
+    return this.http.delete(url);
+  }
+
+  public  addWiki(wiki: IWiki): Observable<IWiki> { 
+    let url = this.configService.Settings.odataApiUrl  + 'Wikis' ; 
+    return this.http.post<IWiki>(url, wiki);
+  }
+
   public  getWikiPageList(wikiId: number): Observable<IPageSummary[]> {
     let url = this.configService.Settings.odataApiUrl  + 'Pages?$expand=wiki($select=title)&$filter=wikiId eq ' + wikiId +'&$select=wikiId,id,title&$orderby=title';
     return this.http.get(url).map(r => (r as IOData).value as IPageSummary[] );
@@ -48,26 +58,30 @@ export class WikiPagesService {
   //   .map(response => response.json() as IPage)
   //   .catch(error => this.handleError(error,url) );
 
-  public  getWikiPage(pageId: number): Observable<IPage> {
-    let url = this.configService.Settings.odataApiUrl  + '/Pages(' + pageId +')' ;
-    return this.http.get<IPage>(url);
-  }
-
   public  getWikiToc(WikiId: number): Observable<IWikiToc> {
-    let url = this.configService.Settings.apiUrl  + '/toc/WikiToc/' + WikiId +'' ;
+    let url = this.configService.Settings.apiUrl  + 'toc/WikiToc/' + WikiId +'' ;
     return this.http.get<IWikiToc>(url);
   }
 
-public addWikiPage( page:IPageEdit ): Observable<IPage>   {
-  let url = this.configService.Settings.odataApiUrl  + '/Pages' ;
-  return this.http.post<IPage>(url, page);
+  public  getWikiPage(pageId: number): Observable<IPage> {
+    let url = this.configService.Settings.odataApiUrl  + 'Pages(' + pageId +')' ;
+    return this.http.get<IPage>(url);
+  }
 
-}
+  public addWikiPage( page:IPage ): Observable<IPage>   {
+    let url = this.configService.Settings.odataApiUrl  + 'Pages' ;
+    return this.http.post<IPage>(url, page);
+  }
 
+  public updateWikiPage( page:IPage ): Observable<any>   {
+    let url = this.configService.Settings.odataApiUrl  + 'Pages(' + page.id  + ')' ;
+    return this.http.patch(url, page);
+  }
 
-
-
-
+  public deleteWikiPage(pageid:number): Observable<any>  {
+    let url = this.configService.Settings.odataApiUrl  + 'Pages(' +pageid+')' ;
+    return this.http.delete(url);
+  }
 
   private handleError(error: Response, url:string) {
     // in a real world app, we may send the server to some remote logging infrastructure

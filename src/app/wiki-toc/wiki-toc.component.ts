@@ -6,6 +6,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { IWiki , IPage , ITag,IPageSummary , IWikiName }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-wiki-toc',
@@ -25,6 +26,7 @@ export class WikiTocComponent implements OnInit {
    public wiki: IWiki;
    public wikiList: IWikiName[];
    public pageList: IPageSummary[];
+   busy: Subscription;
 
   ngOnInit() {
 
@@ -38,7 +40,7 @@ export class WikiTocComponent implements OnInit {
       //
       console.log(' has param = ' , wikiId);
 
-          this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
+      this.busy=    this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
             console.log(' wiki = ' ,w);
             this.pageTitle = w.title;
             this.wiki = w;

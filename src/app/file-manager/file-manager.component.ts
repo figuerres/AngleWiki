@@ -5,10 +5,14 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { ISubscription} from 'rxjs/Subscription'
 
+import {Subscription} from 'rxjs';
+
 import { ngfSelect,   ngfBackground  } from '../shared/ngf'
 
 import { WikiFilesService } from '../services/wiki-files.service';
 import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc, IWikiFile }  from '../types/Wiki-Interfaces';
+
+import { User } from 'oidc-client';
 
 import { WikiPagesService } from '../services/wiki-pages.service';
 import { AdlGlobalUser   } from '../shared/adl-global-user.service';
@@ -20,18 +24,6 @@ import { AdlGlobalUser   } from '../shared/adl-global-user.service';
 })
 
 
-//
-// missing needed functions: check files to upload for duplicate names on server
-// file rename
-// file delete
-// file size , file type, who uploaded file
-//
-// linking the file to the wiki
-//
-// image src or href use filename or id ??  use service url or server folder name ?
-//  https://devwebservice.adldelivery.com/wikiapi/assets/trak2.png
-//
-
 export class FileManagerComponent implements OnInit , OnDestroy{
   public files:Array<File> = new Array<File>();
   public uploadProgress: number = 0;
@@ -40,7 +32,10 @@ export class FileManagerComponent implements OnInit , OnDestroy{
   private userSubscription : ISubscription;
   public wikiList: IWikiName[];
   private currentWikiId: number = 0;
-  
+  busy: Subscription;
+
+  private user: User;
+
   constructor(
      private router: Router, 
      private FilesService :WikiFilesService ,
@@ -59,9 +54,10 @@ export class FileManagerComponent implements OnInit , OnDestroy{
 
     this.userSubscription = this.AdlUser.user.subscribe( u => {
       console.log("user is : ", u);
+      this.user = u;
     });
 
-    this.wikiPagesService.getWikiNameList().subscribe(w =>{
+    this.busy=    this.wikiPagesService.getWikiNameList().subscribe(w =>{
       console.log(' wiki = ' ,w);
      this.wikiList = w;
     });
@@ -72,7 +68,7 @@ export class FileManagerComponent implements OnInit , OnDestroy{
     let wid = + (event.target as HTMLSelectElement).value;
     if(wid>0){
       this.currentWikiId = wid;
-      this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
+      this.busy=   this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
         this.WikiFiles = data;
       });
     }
@@ -112,7 +108,7 @@ export class FileManagerComponent implements OnInit , OnDestroy{
           this.uploadProgress = 0;
           this.files = new Array<File>();
           console.log('File(s) are completely uploaded!');
-          this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
+          this.busy=   this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
             this.WikiFiles = data;
             });          
         } else {
