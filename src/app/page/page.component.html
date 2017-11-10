@@ -3,23 +3,42 @@
     <div class="col-md-2">
       <div class="panel panel-info">
         <div class="panel-heading">Wiki Contents</div>
-
         <div class="panel-body">
-
-          <ol>
-              <li *ngFor="let item of pageList; let i = index " >
-                <a [routerLink]="['/wiki/page'+'/'+item.id+'/'+item.title+'']" 
-                 routerLinkActive="active" >{{item.title}}</a></li>
+          <ol *ngIf="nodes" >
+              <li *ngFor="let item of nodes " >
+                <a [routerLink]="['/wiki/page'+'/'+item.id+'/'+item.name+'']" 
+                 routerLinkActive="active" >{{item.name}}</a>
+                 <ol *ngIf="item.children?.length>0" >
+                    <li *ngFor="let item2 of item.children" >
+                        <a [routerLink]="['/wiki/page'+'/'+item2.id+'/'+item2.name+'']" 
+                        routerLinkActive="active" >{{item2.name}}</a>
+                        <ol *ngIf="item2.children?.length>0" >
+                            <li *ngFor="let item3 of item2.children" >
+                                <a [routerLink]="['/wiki/page'+'/'+item3.id+'/'+item3.name+'']" 
+                                routerLinkActive="active" >{{item3.name}}</a>
+                                <ol *ngIf="item3.children?.length>0" >
+                                    <li *ngFor="let item4 of item3.children" >
+                                        <a [routerLink]="['/wiki/page'+'/'+item4.id+'/'+item4.name+'']" 
+                                        routerLinkActive="active" >{{item4.name}}</a>
+                                        <ol *ngIf="item4.children?.length>0" >
+                                            <li *ngFor="let item5 of item4.children" >
+                                                <a [routerLink]="['/wiki/page'+'/'+item5.id+'/'+item5.name+'']" 
+                                                routerLinkActive="active" >{{item5.name}}</a>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </li>
+                 </ol>
+                </li>
           </ol>
-
-
         </div>
-
-
       </div>
     </div>
     <div class="col-md-8">
-      <h1 *ngIf="page" >{{page.title}}</h1>
+      <h1 *ngIf="page" >{{page.name}}</h1>
       <markdown *ngIf="page" [data]="page.pageContent"></markdown>
     </div>
     <div *ngIf="user"   class="col-md-2">

@@ -7,7 +7,7 @@ import {HttpClient  , HttpResponse , HttpRequest, HttpHeaders  } from '@angular/
 
 import { Observable } from 'rxjs/Rx';
 
-import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc  , IPageEdit }  from '../types/Wiki-Interfaces';
+import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc  , IPageEdit,INvp, INNvp }  from '../types/Wiki-Interfaces';
 import { IOData } from '../types/odata.interface'
 //import { AdlLoggerService } from '../shared/adl-logger.service';
 
@@ -20,38 +20,72 @@ export class WikiPagesService {
   constructor( private http: HttpClient, private configService: AdlGlobalConfig  ) {
   }
 
+
   public  getWikiList(): Observable<IWiki[]> {
     let url = this.configService.Settings.odataApiUrl + 'Wikis';
     return this.http.get(url)
     .map(r =>  (r as IOData).value as IWiki[]);  
   }
 
+
   // Wikis?$select=id%2Ctitle&$orderby=title
-  public  getWikiNameList(): Observable<IWikiName[]> {
-    let url = this.configService.Settings.odataApiUrl + 'Wikis?$select=id,title&$orderby=title';
-    return this.http.get(url) 
-    .map(r => (r as IOData).value as IWikiName[] );
+  public  getWikiNameList(): Observable<INNvp[]> {
+    let url = this.configService.Settings.apiUrl + 'Wiki/WikiList';
+    return this.http.get<INNvp[]>(url);
+   // .map(r => (r as IOData).value as IWikiName[]);
   }
 
+
+  public  getPageNameBindingList(wikiId:number): Observable<INvp[]> {
+    let url = this.configService.Settings.apiUrl + 'Wiki/WikiPageList/' + wikiId;
+    return this.http.get<INvp[]>(url);
+   // .map(r => (r as IOData).value as IWikiName[]);
+  }
+  
+  public  getWikiNameBindingList(): Observable<INvp[]> {
+    let url = this.configService.Settings.apiUrl + 'Wiki/WikiBindingList';
+    return this.http.get<INvp[]>(url);
+   // .map(r => (r as IOData).value as IWikiName[]);
+  }
+  
+ 
   public  getWiki(wikiId: number): Observable<IWiki> { 
     let url = this.configService.Settings.odataApiUrl  + 'Wikis(' + wikiId +')' ; 
     return this.http.get<IWiki>(url);
   }
+
+
+
 
   public  deleteWiki(wikiId: number): Observable<any> { 
     let url = this.configService.Settings.odataApiUrl  + 'Wiki(' + wikiId +')' ; 
     return this.http.delete(url);
   }
 
+
   public  addWiki(wiki: IWiki): Observable<IWiki> { 
+    let postdata = {
+        "name":wiki.name,
+        "rolesJSON": wiki.rolesJSON
+    };
     let url = this.configService.Settings.odataApiUrl  + 'Wikis' ; 
-    return this.http.post<IWiki>(url, wiki);
+    return this.http.post<IWiki>(url, postdata);
   }
+
 
   public  getWikiPageList(wikiId: number): Observable<IPageSummary[]> {
     let url = this.configService.Settings.odataApiUrl  + 'Pages?$expand=wiki($select=title)&$filter=wikiId eq ' + wikiId +'&$select=wikiId,id,title&$orderby=title';
     return this.http.get(url).map(r => (r as IOData).value as IPageSummary[] );
   }
+
+
+  public  getWikiTable(wikiId: number): Observable<IWikiToc> {
+    let url = this.configService.Settings.apiUrl +'Wiki/WikiTable/' + wikiId ;
+    return this.http.get<IWikiToc>(url);
+    //.map(r => (r as IOData).value as IPageSummary[] );
+  }
+
+  
 
   // let url = 'https://devwebservice.adldelivery.com/api/Error/xThrow' ;
   //   return this.http.post(url,'')
@@ -64,17 +98,27 @@ export class WikiPagesService {
   }
 
   public  getWikiPage(pageId: number): Observable<IPage> {
-    let url = this.configService.Settings.odataApiUrl  + 'Pages(' + pageId +')' ;
+    let url = this.configService.Settings.apiUrl + 'Wiki/WikiPage/' + pageId  ;
     return this.http.get<IPage>(url);
   }
 
   public addWikiPage( page:IPage ): Observable<IPage>   {
     let url = this.configService.Settings.odataApiUrl  + 'Pages' ;
-    return this.http.post<IPage>(url, page);
+    let postdata = {
+      "wikiId": +page.wikiId,
+      "parentPageId": page.parentPageId,
+        "name":page.name    ,
+        "pageContent":  page.pageContent,
+        "order":page.order,
+        "rolesJSON": page.rolesJSON
+    };
+    console.log("add page = " , url  );
+    return this.http.post<IPage>(url, postdata);
   }
 
   public updateWikiPage( page:IPage ): Observable<any>   {
     let url = this.configService.Settings.odataApiUrl  + 'Pages(' + page.id  + ')' ;
+    console.log(" update page = " , url  );
     return this.http.patch(url, page);
   }
 

@@ -24,7 +24,7 @@ export class PagesComponent implements OnInit {
    ) { }
 
    public linkList: any[];
-   public pageTitle = 'Markdown content data';
+   public pageTitle = '';
    public wiki: IWiki;
    public wikiList: IWikiName[];
    public pageList: IPageSummary[];

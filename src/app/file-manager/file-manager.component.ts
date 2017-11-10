@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs';
 import { ngfSelect,   ngfBackground  } from '../shared/ngf'
 
 import { WikiFilesService } from '../services/wiki-files.service';
-import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc, IWikiFile }  from '../types/Wiki-Interfaces';
+import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc, IWikiFile, INvp }  from '../types/Wiki-Interfaces';
 
 import { User } from 'oidc-client';
 
@@ -30,7 +30,7 @@ export class FileManagerComponent implements OnInit , OnDestroy{
   public WikiFiles: IWikiFile[] ;
   private userLoggedInSubscription : ISubscription;
   private userSubscription : ISubscription;
-  public wikiList: IWikiName[];
+  public wikiList: INvp[];
   private currentWikiId: number = 0;
   busy: Subscription;
 
@@ -57,7 +57,7 @@ export class FileManagerComponent implements OnInit , OnDestroy{
       this.user = u;
     });
 
-    this.busy=    this.wikiPagesService.getWikiNameList().subscribe(w =>{
+    this.busy=    this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
       console.log(' wiki = ' ,w);
      this.wikiList = w;
     });

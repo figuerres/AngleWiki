@@ -10,7 +10,7 @@
                  [(ngModel)]="page.wikiId"  name="wikiId" #wikiId="ngModel" 
                   class="form-control"  required >
                   <option value="0" >--Select Wiki--</option>
-                  <option *ngFor="let w of wikiList" value={{w.id}} [selected]="page.wikiid == w.id" >{{w.title}}</option>
+                  <option *ngFor="let w of wikiList" value={{w.id}} [selected]="page.wikiid == w.id" >{{w.name}}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -19,14 +19,14 @@
                   [(ngModel)]="page.parentPageId" name="parentPageId" #parentPageId="ngModel"  
                   class="form-control"  >
                     <option value="0" >--Select Parent--</option>
-                    <option *ngFor="let w of pagesList" value={{w.id}}  [selected]="page.parentPageId == w.id"  >{{w.title}}</option>
+                    <option *ngFor="let w of pagesList" value={{w.id}}  [selected]="page.parentPageId == w.id"  >{{w.name}}</option>
                   </select>
             </div>
           <div class="form-group">
               <label for="pagetitle">Title</label>
               <input  id="pagetitle"
-              [(ngModel)]="page.title" 
-              name="title" #title="ngModel" 
+              [(ngModel)]="page.name" 
+              name="name" #title="ngModel" 
               type="text" class="form-control" placeholder="page title here" required  >
           </div>
         <div class="form-group">
@@ -36,6 +36,19 @@
           name="pageContent" #pageContent="ngModel"  
            type="text" required ></textarea>
        </div>
+       <div class="form-group">
+          <label for="content">Roles</label>
+          <select  id="pageParentId"
+           
+          class="form-control"  >
+            <option value="0" >--Public--</option>
+            <option   > Checkbox list  </option>
+            <option   > pick any  </option>
+            <option   > roles in list  </option>
+          </select>
+       </div>
+
+
           <button type="submit" class="btn btn-success" [disabled]="!newPageForm.form.valid">Submit</button>
           <button type="button" class="btn btn-default" (click)="newPage(); newPageForm.reset()">New Page</button>
 </form>

@@ -4,7 +4,7 @@ import { MarkdownModule } from 'angular2-markdown';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
-import { IWiki , IPage , ITag,IPageSummary , IWikiName }  from '../types/Wiki-Interfaces';
+import { IWiki , IPage , ITag,IPageSummary , IWikiName,INvp,INNvp }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
 import {Subscription} from 'rxjs';
 
@@ -20,12 +20,8 @@ export class WikiListComponent implements OnInit {
     private route: ActivatedRoute,
    private wikiPagesService:  WikiPagesService
    ) { }
-
-   public linkList: any[];
-   public pageTitle = 'Markdown content data';
-   public wiki: IWiki;
-   public wikiList: IWikiName[];
-   public pageList: IPageSummary[];
+   public pageTitle = '';
+   public wikiList: INNvp[];
    busy: Subscription;
   ngOnInit() {
       //

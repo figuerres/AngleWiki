@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ISubscription} from 'rxjs/Subscription'
 import {Subscription} from 'rxjs';
 
-import { IWiki , IPage , ITag,IPageSummary  }  from '../types/Wiki-Interfaces';
+import { IWiki , IPage , ITag,IPageSummary, IWikiToc  }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
 import { AdlGlobalUser   } from '../shared/adl-global-user.service';
 import { User } from 'oidc-client';
@@ -25,6 +25,14 @@ export class PageComponent implements OnInit {
    private userSubscription : ISubscription;
    private user: User;
    busy: Subscription;
+   public wikiToc: IWikiToc = {
+    id: 0,
+  order: 0,
+    name: "empty",
+    children: [ ]
+   };
+
+   public nodes = [{}];
 
 
   constructor( 
@@ -54,23 +62,23 @@ export class PageComponent implements OnInit {
       this.user = u;
     });
 
-
       this.route.params.forEach(params =>{
       let id = params["id"];
       this.busy=  this.wikiPagesService.getWikiPage(id).subscribe(page =>{
         console.log(' page = ' ,page);
         console.log(' content = ' ,page.pageContent);
         this.page = page;
-        this.wikiPagesService.getWikiPageList(page.wikiId).subscribe(wPages =>{
-          console.log(' wiki pages = ' ,wPages);
-          this.pageList = wPages;
+        this.wikiPagesService.getWikiTable(page.wikiId).subscribe(wToc =>{
+          console.log(' wiki Toc = ' ,wToc);
+          this.wikiToc = wToc;
+          this.nodes = this.wikiToc.children;
         });
       });
     });
   }
 
   editPage(){
-    this.router.navigate(['/wikipage/edit/' ,  this.page.id,  this.page.title  ]  );
+    this.router.navigate(['/wikipage/edit/' ,  this.page.id,  this.page.name  ]  );
   }
 
   ngOnDestroy() {

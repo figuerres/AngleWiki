@@ -1,3 +1,63 @@
-<p>
-  settings works!
-</p>
+
+
+<div [ngBusy]="busy" class="container-fluid">
+
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Wiki Management</div>
+                <div class="panel-body">
+                    <p>Current Wikis:</p>
+                    <ul  *ngIf='wikiList' >
+                        <li *ngFor="let w of wikiList" >{{w.name}}</li>
+                    </ul>
+                    <form *ngIf='wiki' (ngSubmit)="onSubmit()" #newWikiForm="ngForm"  >
+                        <div class="form-group">
+                                <label for="wikiname">Name of Wiki</label>
+                                <input  id="wikiname"
+                                [(ngModel)]="wiki.name" 
+                                name="name" #title="ngModel" 
+                                type="text" class="form-control" placeholder="wiki name here" required  >
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Roles</label>
+                            <select  id="pageParentId" class="form-control"  >
+                                <option value="0" >--Public--</option>
+                                <option > Checkbox list </option>
+                                <option > pick any </option>
+                                <option > roles in list </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success" [disabled]="!newWikiForm.form.valid">Submit</button>
+                        <button type="button" class="btn btn-default" (click)="newWiki(); newWikiForm.reset()">New Wiki</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">panel 2</div>
+                <div class="panel-body"> </div>
+            </div>
+        </div> 
+        <div class="col-md-9">
+            <div class="panel panel-info">
+                <div class="panel-heading">panel 3</div>
+                <div class="panel-body"> </div>
+            </div>       
+        </div> 
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom: 40px">
+            <div class="panel panel-info">
+                <div class="panel-heading">panel 4</div>
+                <div class="panel-body"></div>
+            </div>
+        </div>
+    </div>
+
+</div>

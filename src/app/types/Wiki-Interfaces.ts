@@ -7,7 +7,7 @@
         lastChanged: Date;
         rowVersion: string;
         recDelete: boolean;
-        title: string;
+        name: string;
         rolesJSON: string;
     }
 
@@ -21,7 +21,8 @@
         lastChanged: Date;
         rowVersion: string;
         recDelete: boolean;
-        title: string;
+        order:number;
+        name: string;
         rolesJSON?: any;
         pageContent: string;
     }
@@ -30,7 +31,7 @@
         id: number;
         wikiId: number;
         parentPageId?: any;
-        title: string;
+        name: string;
         pageContent: string;
     }
 
@@ -48,15 +49,15 @@
     export interface IPageSummary {
         wikiId:number;
         id: number;
-        title: string;
+        name: string;
         wiki:{
-          title: string;
+          name: string;
         }
     }
 
     export interface IWikiName {
         id: number;
-        title: string;
+        name: string;
     }
 
     export interface IWikiToc {
@@ -71,4 +72,13 @@
         fileName: string;
         mimeType: string;
         createdDate: Date;
+    }
+    export interface INvp {
+        id: number;
+        name: string;
+    }
+    export interface INNvp {
+        id: number;
+        name: string;
+        linkName: string;
     }

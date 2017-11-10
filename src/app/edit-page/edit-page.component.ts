@@ -8,7 +8,7 @@ import {Subscription} from 'rxjs';
 
 import { MarkdownComponent, MarkdownService } from 'angular2-markdown';
 
-import { IWiki , IPage , ITag,IPageSummary , IWikiName , IPageEdit }  from '../types/Wiki-Interfaces';
+import { IWiki , IPage , ITag,IPageSummary , IWikiName , IPageEdit, INvp, INNvp }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
 import { AdlGlobalUser   } from '../shared/adl-global-user.service';
 import { User } from 'oidc-client';
@@ -19,23 +19,15 @@ import { User } from 'oidc-client';
   styleUrls: ['./edit-page.component.css']
 })
 export class EditPageComponent implements OnInit {
-  public textData = `## Markdown content data`;
-  public wikiList: IWikiName[];
+
+  public wikiList: INvp[];
   private userLoggedInSubscription : ISubscription;
   private userSubscription : ISubscription;
-  // public wikiPage:  IPageEdit  = {  
-  //   "id": 0,
-  //   "wikiId": 0,
-  //   "parentPageId": null,
-  //   "title": "",
-  //   "pageContent": ""
-  // }
   public page : IPage;
-
- public pagesList: IPageSummary[];
- private user: User;
- busy: Subscription;
-private entryPageId: number;
+  public pagesList: INvp[];
+  private user: User;
+  busy: Subscription;
+  private entryPageId: number;
 
   constructor(
     private router: Router,
@@ -73,21 +65,17 @@ private entryPageId: number;
           this.page = p;
           console.log(' page = ' ,this.page);
           console.log(' content = ' ,this.page.pageContent);
-          // this.wikiPage.pageContent =this.page.pageContent;
-          // this.wikiPage.title = this.page.title;
-          // this.wikiPage.wikiId = this.page.wikiId;
-          // this.wikiPage.parentPageId  = this.page.parentPageId;
-          this.wikiPagesService.getWikiPageList(this.page.wikiId).subscribe(wPages =>{
+          this.wikiPagesService.getPageNameBindingList(this.page.wikiId).subscribe(wPages =>{
             console.log(' wiki pages = ' ,wPages);
             this.pagesList  = wPages;
           });
-          this.wikiPagesService.getWikiNameList().subscribe(w =>{
+          this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
             console.log(' wiki = ' ,w);
             this.wikiList = w;
           });
         });    
       } else {
-        this.busy=   this.wikiPagesService.getWikiNameList().subscribe(w =>{
+        this.busy=   this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
           this.newPage();
           console.log(' wiki = ' ,w);
           this.wikiList = w;
@@ -100,13 +88,16 @@ private entryPageId: number;
   onWikiChange(event:Event){
     let wid = + (event.target as HTMLSelectElement).value;
     if(wid>0){
-      this.wikiPagesService.getWikiPageList(wid).subscribe(pages => {
+      this.wikiPagesService.getPageNameBindingList(wid).subscribe(pages => {
         this.pagesList = pages;
       });
     }
   }
 
   onSubmit(){
+
+    console.log("this.entryPageId = " , this.entryPageId  );
+
     if( !this.entryPageId ){
       this. wikiPagesService.addWikiPage(this.page).subscribe(p=>{
         this.page = p;
@@ -116,7 +107,7 @@ private entryPageId: number;
     }else{
       this. wikiPagesService.updateWikiPage(this.page).subscribe(p=>{
         console.log("page updated: ",this.page);
-        this.router.navigate(['/wiki/page/', this.page.id,  this.page.title ] );
+        this.router.navigate(['/wiki/page/', this.page.id,  this.page.name ] );
       });
     }
   }
@@ -126,7 +117,7 @@ private entryPageId: number;
       "id": 0,
       "wikiId": 0,
       "parentPageId": null,
-      "title": "",
+      "name": "",
       "pageContent": "",
       "createdBy": 0,
       "createdDate": null,
@@ -134,6 +125,7 @@ private entryPageId: number;
       "lastChanged": null,
       "rowVersion": null,
       "recDelete": false,
+      "order":0,
       "rolesJSON": null
     };
   }

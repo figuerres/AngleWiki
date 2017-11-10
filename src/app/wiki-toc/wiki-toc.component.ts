@@ -42,7 +42,7 @@ export class WikiTocComponent implements OnInit {
 
       this.busy=    this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
             console.log(' wiki = ' ,w);
-            this.pageTitle = w.title;
+            this.pageTitle = w.name;
             this.wiki = w;
               this.wikiPagesService.getWikiPageList(wikiId).subscribe(wPages =>{
                 console.log(' wiki pages = ' ,wPages);

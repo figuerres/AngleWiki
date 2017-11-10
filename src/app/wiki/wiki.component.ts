@@ -4,7 +4,7 @@ import { MarkdownModule } from 'angular2-markdown';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
-import { IWiki , IPage , ITag,IPageSummary , IWikiName }  from '../types/Wiki-Interfaces';
+import { IWiki , IPage , ITag,IPageSummary , IWikiName, INvp, INNvp }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
 
 import {Subscription} from 'rxjs';
@@ -25,9 +25,9 @@ export class WikiComponent implements OnInit {
    ) { }
 
    public linkList: any[];
-   public pageTitle = 'Markdown content data';
+   public pageTitle = '';
    public wiki: IWiki;
-   public wikiList: IWikiName[];
+   public wikiList: INNvp[];
    public pageList: IPageSummary[];
    busy: Subscription;
   ngOnInit() {
@@ -44,7 +44,7 @@ export class WikiComponent implements OnInit {
 
       this.busy=   this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
             console.log(' wiki = ' ,w);
-            this.pageTitle = w.title;
+            this.pageTitle = w.name;
             this.wiki = w;
               this.wikiPagesService.getWikiPageList(wikiId).subscribe(wPages =>{
                 console.log(' wiki pages = ' ,wPages);

@@ -9,8 +9,8 @@
           <div class="panel-body">
             <div *ngIf='pageList' class="list-group">
                <a *ngFor="let item of pageList; let i = index " 
-                [routerLink]="['/wiki/page'+'/'+item.id+'/'+item.title+'']" 
-                routerLinkActive="active" class="list-group-item">{{item.title}}</a>
+                [routerLink]="['/wiki/page'+'/'+item.id+'/'+item.name+'']" 
+                routerLinkActive="active" class="list-group-item">{{item.name}}</a>
             </div>
           </div>
       </div>
