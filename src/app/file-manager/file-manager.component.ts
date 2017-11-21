@@ -12,6 +12,10 @@ import { ngfSelect,   ngfBackground  } from '../shared/ngf'
 import { WikiFilesService } from '../services/wiki-files.service';
 import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc, IWikiFile, INvp }  from '../types/Wiki-Interfaces';
 
+import { IODataArray, IPagedOData } from '../types/odata.interface';
+
+import { IPageData, pBlock } from '../types/paging.interface';
+
 import { User } from 'oidc-client';
 
 import { WikiPagesService } from '../services/wiki-pages.service';
@@ -28,6 +32,18 @@ export class FileManagerComponent implements OnInit , OnDestroy{
   public files:Array<File> = new Array<File>();
   public uploadProgress: number = 0;
   public WikiFiles: IWikiFile[] ;
+
+  public PagedFiles : IPagedOData;
+
+private pageData : IPageData = {
+  pageSize:20,
+  pageCount: 0,
+  currentPage:0,
+  currentBlock:0,
+  blocks: []
+
+};
+
   private userLoggedInSubscription : ISubscription;
   private userSubscription : ISubscription;
   public wikiList: INvp[];
@@ -68,9 +84,52 @@ export class FileManagerComponent implements OnInit , OnDestroy{
     let wid = + (event.target as HTMLSelectElement).value;
     if(wid>0){
       this.currentWikiId = wid;
-      this.busy=   this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
-        this.WikiFiles = data;
+
+      // this.busy=   this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
+      //   this.WikiFiles = data;
+      // });
+
+      this.busy=   this.FilesService.GetPagedFileList(this.currentWikiId,0,20).subscribe (data => {
+        console.log(" data          = ",  data          );
+        console.log(" data.context  = ",  data["@odata.context"]  );
+        console.log(" data.count    = ",  data["@odata.count"]    );
+        console.log(" data.nextLink = ",  data["@odata.nextLink"] );
+        console.log(" data.value    = ",  data.value    );
+
+        this.PagedFiles = data;
+        this.WikiFiles = data.value as IWikiFile[];
+        this.pageData.currentPage = 1;
+        this.pageData.pageSize = data.value.length;
+        this.pageData.pageCount = Math.ceil(  data["@odata.count"] / data.value.length);
+        let blockSize = 10;
+        let blockCount =  Math.ceil( this.pageData.pageCount / blockSize);
+        
+        for (let i = 0,p= blockSize; i <  blockCount+1 ; i++, p+= blockSize ){
+          console.log(" i = ", i);
+          let b: pBlock = {
+            blockId: i,
+            pages: new Array<number>(),
+            blockLabel: "" 
+          };
+          if (p <= this.pageData.pageCount ) {
+            b.blockLabel = "" + (p - (blockSize - 1)) + " to " +p;
+          }else{
+            b.blockLabel = "" + (p - (blockSize - 1)) + " to " +this.pageData.pageCount;
+          }
+          for (let j=0,pn= p-(blockSize-1); j < blockSize &&  pn <= this.pageData.pageCount; j++, pn ++ ){
+            console.log(" pn = ", pn);
+            b.pages.push(pn );
+          }
+          this.pageData.blocks.push(b);
+        }
+        this.pageData.currentBlock = 0;
+
+        console.log(" Page Data = ", this.pageData);
+        
       });
+
+
+
     }
     else{
       this.currentWikiId = 0;
@@ -78,6 +137,14 @@ export class FileManagerComponent implements OnInit , OnDestroy{
     }
   }
   
+
+  pageClick( block: number, page: number   ){
+
+
+  }
+
+
+
 
 
 

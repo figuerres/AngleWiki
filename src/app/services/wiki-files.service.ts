@@ -5,7 +5,7 @@ import { HttpClient,   HttpResponse , HttpRequest, HttpHeaders , HttpParams, Htt
 import { Observable } from 'rxjs/Rx';
 
 import { IWikiFile }  from '../types/Wiki-Interfaces';
-import { IOData } from '../types/odata.interface'
+import { IODataArray, IPagedOData } from '../types/odata.interface'
 
 
 import { AdlGlobalConfig } from '../shared/adl-global-config.service';
@@ -40,12 +40,43 @@ public GetFileList(wikiId: number)  : Observable<IWikiFile[]>{
  //
  //  https://localhost:44309/wikiapi/Files?$filter=wikiId%20%20eq%201&$select=id%2CfileName%2CmimeType%2CcreatedDate&$orderby=createdDate%20desc
  //
-
+//
+// "@odata.nextLink": "https://wiki.adldelivery.com/wikiapi/Files?$filter=wikiId%20eq%201&$select=id%2CwikiId%2CfileName%2CmimeType%2CcreatedDate&$orderby=createdDate%20desc&$count=true&$skip=60"
+//
+//
+//
+//
  let url = this.configService.Settings.odataApiUrl + 'Files?$filter=wikiId eq ' + wikiId + '&$select=id,wikiId,fileName,mimeType,createdDate&$orderby=createdDate desc';
- return this.http.get(url) 
- .map(r => (r as IOData).value as IWikiFile[] );
+ return this.http.get(url) .map( r=> r as IWikiFile[] );
+// .map(r => (r as OData).value as IWikiFile[] );
 
 }
+
+
+public GetPagedFileList(wikiId: number, pageNumber: number=0, pageSize: number=20 )  : Observable<IPagedOData>{
+  //
+  //  $filter=wikiId%20%20eq%201
+ //  https://devwebservice.adldelivery.com/wikiapi/Files?$select=id%2CfileName%2CmimeType%2CcreatedDate%2C&$orderby=createdDate%20desc
+ //
+ //  https://localhost:44309/wikiapi/Files?$filter=wikiId%20%20eq%201&$select=id%2CfileName%2CmimeType%2CcreatedDate&$orderby=createdDate%20desc
+ //
+//
+// "@odata.nextLink": "https://wiki.adldelivery.com/wikiapi/Files?$filter=wikiId%20eq%201&$select=id%2CwikiId%2CfileName%2CmimeType%2CcreatedDate&$orderby=createdDate%20desc&$count=true&$skip=60"
+//
+//
+//
+ let url = this.configService.Settings.odataApiUrl + 'Files?$filter=wikiId eq ' + wikiId + '&$select=id,wikiId,fileName,mimeType,createdDate&$orderby=createdDate desc&$count=true';
+if( pageNumber > 0){
+  url = url + "&$skip=" +  pageNumber * pageSize  ;
+}
+
+return this.http.get<IPagedOData>(url);
+
+ // .map(r => (r as IPagedOData).value as IWikiFile[] );
+
+}
+
+
 
 
 
