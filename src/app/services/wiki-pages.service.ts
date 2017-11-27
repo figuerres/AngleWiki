@@ -85,6 +85,12 @@ export class WikiPagesService {
     //.map(r => (r as IOData).value as IPageSummary[] );
   }
 
+  public  getWikiTableByPage(pageId: number): Observable<IWikiToc> {
+    let url = this.configService.Settings.apiUrl +'Wiki/WikiTableByPage/' + pageId ;
+    return this.http.get<IWikiToc>(url);
+    //.map(r => (r as IOData).value as IPageSummary[] );
+  }
+
   
 
   // let url = 'https://devwebservice.adldelivery.com/api/Error/xThrow' ;

@@ -86,15 +86,11 @@
 
                     <div class="text-center" *ngIf="pageData.pageCount > 0">
                         <ul class="pagination">
-                            <li [ngClass]="pageData.currentPage == 1 ? 'disabled' : ''"><a (click)="pageClick(0 )">&hellip;</a></li>
-                            <li [ngClass]="pageData.currentPage == 1 ? 'disabled' : ''"><a (click)="pageClick(0 )">&laquo;</a></li>
-                            <li [ngClass]="pageData.currentPage == 1 ? 'disabled' : ''"><a (click)="pageClick(0 )">&lsaquo;</a></li>
+                            <li [ngClass]="pageData.currentBlock == 0 ? 'disabled' : ''"><a (click)="blockClick( pageData.currentBlock-1  )">&laquo;</a></li>
                             <li *ngFor="let page of pageData.blocks[pageData.currentBlock].pages" [ngClass]="pageData.currentPage == page ? 'active' : ''">
                                 <a (click)="pageClick(pageData.currentBlock, page )">{{page}}</a>
                             </li>
-                            <li [ngClass]="pageData.currentPage == pageData.pageCount ? 'disabled' : ''"><a (click)="pageClick(pageData.pageCount)">&rsaquo;</a></li>
-                            <li [ngClass]="pageData.currentPage == pageData.pageCount ? 'disabled' : ''"><a (click)="pageClick(pageData.pageCount)">&raquo;</a></li>
-                            <li [ngClass]="pageData.currentPage == pageData.pageCount ? 'disabled' : ''"><a (click)="pageClick(pageData.pageCount)">&hellip;</a></li>
+                            <li [ngClass]="(pageData.currentBlock >= (pageData.blockCount-1)) ? 'disabled' : ''"><a (click)="blockClick( ((pageData.currentBlock < (pageData.blockCount-1))?pageData.currentBlock+1:pageData.currentBlock))">&raquo;</a></li>
                         </ul>
                     </div>
 

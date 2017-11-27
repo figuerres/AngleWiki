@@ -65,11 +65,11 @@ export class PageComponent implements OnInit {
       this.route.params.forEach(params =>{
       let id = params["id"];
       this.busy=  this.wikiPagesService.getWikiPage(id).subscribe(page =>{
-        console.log(' page = ' ,page);
-        console.log(' content = ' ,page.pageContent);
+      //  console.log(' page = ' ,page);
+      //  console.log(' content = ' ,page.pageContent);
         this.page = page;
         this.wikiPagesService.getWikiTable(page.wikiId).subscribe(wToc =>{
-          console.log(' wiki Toc = ' ,wToc);
+        //  console.log(' wiki Toc = ' ,wToc);
           this.wikiToc = wToc;
           this.nodes = this.wikiToc.children;
         });

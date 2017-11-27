@@ -1,4 +1,6 @@
 
+import { Observable } from 'rxjs/Rx';
+
     export interface IWiki {
         id: number;
         createdBy: number;
@@ -81,4 +83,9 @@
         id: number;
         name: string;
         linkName: string;
+    }
+
+    export interface IResolvedPage{
+        page :  Observable<IPage>;
+        toc :  Observable<IWikiToc>;
     }

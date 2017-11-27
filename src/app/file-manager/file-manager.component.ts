@@ -36,8 +36,11 @@ export class FileManagerComponent implements OnInit , OnDestroy{
   public PagedFiles : IPagedOData;
 
 private pageData : IPageData = {
-  pageSize:20,
+  rowCount: 0,
+  pageSize:10,
   pageCount: 0,
+  blockSize: 0,
+  blockCount:0,
   currentPage:0,
   currentBlock:0,
   blocks: []
@@ -89,47 +92,19 @@ private pageData : IPageData = {
       //   this.WikiFiles = data;
       // });
 
-      this.busy=   this.FilesService.GetPagedFileList(this.currentWikiId,0,20).subscribe (data => {
+      this.busy=   this.FilesService.GetPagedFileList(this.currentWikiId,0,10).subscribe (data => {
         console.log(" data          = ",  data          );
         console.log(" data.context  = ",  data["@odata.context"]  );
         console.log(" data.count    = ",  data["@odata.count"]    );
-        console.log(" data.nextLink = ",  data["@odata.nextLink"] );
+        //console.log(" data.nextLink = ",  data["@odata.nextLink"] );
         console.log(" data.value    = ",  data.value    );
-
         this.PagedFiles = data;
         this.WikiFiles = data.value as IWikiFile[];
-        this.pageData.currentPage = 1;
-        this.pageData.pageSize = data.value.length;
-        this.pageData.pageCount = Math.ceil(  data["@odata.count"] / data.value.length);
-        let blockSize = 10;
-        let blockCount =  Math.ceil( this.pageData.pageCount / blockSize);
-        
-        for (let i = 0,p= blockSize; i <  blockCount+1 ; i++, p+= blockSize ){
-          console.log(" i = ", i);
-          let b: pBlock = {
-            blockId: i,
-            pages: new Array<number>(),
-            blockLabel: "" 
-          };
-          if (p <= this.pageData.pageCount ) {
-            b.blockLabel = "" + (p - (blockSize - 1)) + " to " +p;
-          }else{
-            b.blockLabel = "" + (p - (blockSize - 1)) + " to " +this.pageData.pageCount;
-          }
-          for (let j=0,pn= p-(blockSize-1); j < blockSize &&  pn <= this.pageData.pageCount; j++, pn ++ ){
-            console.log(" pn = ", pn);
-            b.pages.push(pn );
-          }
-          this.pageData.blocks.push(b);
-        }
+        this.pagerCompute( 10 ,10,  +data["@odata.count"] );
+        this.pageData.currentPage = 0;
         this.pageData.currentBlock = 0;
-
         console.log(" Page Data = ", this.pageData);
-        
       });
-
-
-
     }
     else{
       this.currentWikiId = 0;
@@ -139,12 +114,76 @@ private pageData : IPageData = {
   
 
   pageClick( block: number, page: number   ){
-
-
+    console.log(" pageClick block = ", block );
+    console.log(" page = ", page);
+    this.busy=   this.FilesService.GetPagedFileList(this.currentWikiId,page,this.pageData.pageSize).subscribe (data => {
+      console.log(" data          = ",  data          );
+      console.log(" data.context  = ",  data["@odata.context"]  );
+      console.log(" data.count    = ",  data["@odata.count"]    );
+      //console.log(" data.nextLink = ",  data["@odata.nextLink"] );
+      console.log(" data.value    = ",  data.value    );
+      this.PagedFiles = data;
+      this.WikiFiles = data.value as IWikiFile[];
+      //   this.pagerCompute( 10,10,  +data["@odata.count"] );
+      this.pageData.currentPage = page;
+      // this.pageData.currentBlock = 0;
+      console.log(" Page Data = ", this.pageData);
+    });
   }
 
 
+  blockClick( block: number  ){
+    console.log(" blockClick block = ", block);
+    if( block <=  this.pageData.blockCount){
+      console.log(" this.pageData.blocks[block].pages[0] = ", this.pageData.blocks[block].pages[0] );
+      //  console.log(" Page Data = ", this.pageData)
+      //  console.log(" Page Data = ", this.pageData)
+      this.busy=   this.FilesService.GetPagedFileList(this.currentWikiId,this.pageData.blocks[block].pages[0],this.pageData.pageSize).subscribe (data => {
+        console.log(" data          = ",  data          );
+        console.log(" data.context  = ",  data["@odata.context"]  );  
+        console.log(" data.count    = ",  data["@odata.count"]    );
+        //console.log(" data.nextLink = ",  data["@odata.nextLink"] );
+        console.log(" data.value    = ",  data.value    );
+        this.PagedFiles = data;
+        this.WikiFiles = data.value as IWikiFile[];
+        //   this.pagerCompute( 10,10,  +data["@odata.count"] );
+        this.pageData.currentPage = this.pageData.blocks[block].pages[0];
+        this.pageData.currentBlock = block;
+        console.log(" Page Data = ", this.pageData);
+      });
+    }
+  }
 
+
+pagerCompute( ipageSize:number,iblockSize:number, irowCount:number ){
+  this.pageData.rowCount = irowCount
+  this.pageData.pageSize = ipageSize;
+  this.pageData.blockSize = iblockSize;
+  this.pageData.pageCount = Math.ceil(  this.pageData.rowCount / this.pageData.pageSize);
+  this.pageData.blockCount =  Math.ceil( this.pageData.pageCount / this.pageData.blockSize);
+  
+  for (let i = 0,p= this.pageData.blockSize; i <  this.pageData.blockCount ; i++, p+= this.pageData.blockSize ){
+    console.log(" i = ", i);
+    let b: pBlock = {
+      blockId: i,
+      pages: new Array<number>(),
+      blockLabel: "" 
+    };
+    if (p <= this.pageData.pageCount ) {
+      b.blockLabel = "" + (p - (this.pageData.blockSize - 1)) + " to " +p;
+    }else{
+      b.blockLabel = "" + (p - (this.pageData.blockSize - 1)) + " to " +this.pageData.pageCount;
+    }
+    for (let j=0,pn= p-(this.pageData.blockSize-1); j < this.pageData.blockSize &&  pn <= this.pageData.pageCount; j++, pn++ ){
+      if((pn*this.pageData.pageSize)<this.pageData.rowCount){
+        console.log(" pn = ", pn);
+        b.pages.push(pn ); 
+      }
+    }
+    this.pageData.blocks.push(b);
+  }
+ // console.log(" Page Data = ", this.pageData);
+}
 
 
 

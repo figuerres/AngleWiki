@@ -53,7 +53,7 @@ public GetFileList(wikiId: number)  : Observable<IWikiFile[]>{
 }
 
 
-public GetPagedFileList(wikiId: number, pageNumber: number=0, pageSize: number=20 )  : Observable<IPagedOData>{
+public GetPagedFileList(wikiId: number, pageNumber: number=0, pageSize: number=10 )  : Observable<IPagedOData>{
   //
   //  $filter=wikiId%20%20eq%201
  //  https://devwebservice.adldelivery.com/wikiapi/Files?$select=id%2CfileName%2CmimeType%2CcreatedDate%2C&$orderby=createdDate%20desc
@@ -63,9 +63,11 @@ public GetPagedFileList(wikiId: number, pageNumber: number=0, pageSize: number=2
 //
 // "@odata.nextLink": "https://wiki.adldelivery.com/wikiapi/Files?$filter=wikiId%20eq%201&$select=id%2CwikiId%2CfileName%2CmimeType%2CcreatedDate&$orderby=createdDate%20desc&$count=true&$skip=60"
 //
+//  &$top=10&
 //
 //
- let url = this.configService.Settings.odataApiUrl + 'Files?$filter=wikiId eq ' + wikiId + '&$select=id,wikiId,fileName,mimeType,createdDate&$orderby=createdDate desc&$count=true';
+//
+ let url = this.configService.Settings.odataApiUrl + 'Files?$filter=wikiId eq ' + wikiId + '&$select=id,wikiId,fileName,mimeType,createdDate&$orderby=createdDate desc&$count=true&$top=' + pageSize;
 if( pageNumber > 0){
   url = url + "&$skip=" +  pageNumber * pageSize  ;
 }
