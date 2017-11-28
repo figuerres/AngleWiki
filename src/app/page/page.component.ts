@@ -51,8 +51,13 @@ export class PageComponent implements OnInit {
       return `<a href="${href}">${text}</a>`;      
     }
     };
+  }
 
-
+  onPageResolved( wPage : IPage ,  wWikiToc: IWikiToc ){
+   // console.log("onPageResolved( wPage : IPage  ): ", wPage);
+    this.page = wPage;
+    this.wikiToc =  wWikiToc;
+    this.nodes = this.wikiToc.children;
   }
 
   ngOnInit( ) {
@@ -62,19 +67,23 @@ export class PageComponent implements OnInit {
       this.user = u;
     });
 
-      this.route.params.forEach(params =>{
-      let id = params["id"];
-      this.busy=  this.wikiPagesService.getWikiPage(id).subscribe(page =>{
-      //  console.log(' page = ' ,page);
-      //  console.log(' content = ' ,page.pageContent);
-        this.page = page;
-        this.wikiPagesService.getWikiTable(page.wikiId).subscribe(wToc =>{
-        //  console.log(' wiki Toc = ' ,wToc);
-          this.wikiToc = wToc;
-          this.nodes = this.wikiToc.children;
-        });
-      });
+    this.route.data.subscribe(data => {
+      this.onPageResolved(data['page'],data['toc']);
     });
+
+    //   this.route.params.forEach(params =>{
+    //   let id = params["id"];
+    //   this.busy=  this.wikiPagesService.getWikiPage(id).subscribe(page =>{
+    //   //  console.log(' page = ' ,page);
+    //   //  console.log(' content = ' ,page.pageContent);
+    //     this.page = page;
+    //     this.wikiPagesService.getWikiTable(page.wikiId).subscribe(wToc =>{
+    //     //  console.log(' wiki Toc = ' ,wToc);
+    //       this.wikiToc = wToc;
+    //       this.nodes = this.wikiToc.children;
+    //     });
+    //   });
+    // });
   }
 
   editPage(){

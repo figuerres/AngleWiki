@@ -17,6 +17,9 @@ import { WikiListComponent } from './wiki-list/wiki-list.component';
 import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 import { WikiComponent } from './wiki/wiki.component';
 
+import { WikiPageResolverService  } from './services/wiki-page-resolver.service';
+import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
+
 export const appRoutes: Routes = [
             {
                 path: '',
@@ -47,6 +50,10 @@ export const appRoutes: Routes = [
 
             {
                 path: 'wiki/page/:id/:title',
+                resolve: { 
+                    page: WikiPageResolverService, 
+                    toc: WikiTocResolverService
+                 },
                 component: PageComponent
             },
             {

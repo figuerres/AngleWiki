@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import{ HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
 
 
 import { ngfBackground } from './ngf-background.directive';

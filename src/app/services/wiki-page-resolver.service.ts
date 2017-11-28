@@ -17,7 +17,10 @@ export class WikiPageResolverService  implements Resolve<IPage>  {
 
   resolve(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<IPage> {
-        const id = +route.paramMap.get('id');
-        return  this.wikiPagesService.getWikiPage(id);
+      //  console.log('+route.paramMap.get(id) = ' , +route.paramMap.get('id') );
+      //  const id = +route.paramMap.get('id');
+      //  console.log('route.paramMap = ' , route.paramMap );
+      //  console.log('route.params = ' , route.params );
+        return  this.wikiPagesService.getWikiPage(+route.paramMap.get('id'));
     }
 }

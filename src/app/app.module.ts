@@ -14,7 +14,8 @@ import { ErrorHandler } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { Ng2BootstrapModule } from 'ngx-bootstrap';
+//  import { Ng2BootstrapModule } from 'ngx-bootstrap';
+
 import { TypeaheadModule, ProgressbarModule, AlertModule, AccordionModule } from 'ngx-bootstrap';
 import { TabsModule } from 'ngx-bootstrap';
 import { MarkdownModule, MarkdownService } from 'angular2-markdown';
@@ -47,6 +48,9 @@ import { AdlGlobalConfig } from './shared/adl-global-config.service';
 import { AuthGuardService   } from './shared/adl-global-auth-guard.service';
 import { AdlGlobalUser   } from './shared/adl-global-user.service';
 
+import { WikiPageResolverService  } from './services/wiki-page-resolver.service';
+import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
+
 //
 //  RouterModule.forRoot(appRoutes, { enableTracing: true }),
 //
@@ -74,7 +78,7 @@ import { AdlGlobalUser   } from './shared/adl-global-user.service';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    Ng2BootstrapModule,
+   
     AccordionModule.forRoot(),
     TypeaheadModule.forRoot(),
     AlertModule.forRoot(),
@@ -90,6 +94,8 @@ import { AdlGlobalUser   } from './shared/adl-global-user.service';
   ],
   providers: [
     MarkdownService,
+    WikiPageResolverService,
+    WikiTocResolverService,
     WikiPagesService,
     WikiFilesService,
     {
