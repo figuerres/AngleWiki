@@ -17,9 +17,6 @@ export class WikiTocResolverService  implements Resolve<IWikiToc>  {
 
   resolve(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<IWikiToc> {
-      //  const id = +route.paramMap.get('id');
-      //  console.log('route.paramMap = ' , route.paramMap );
-      //  console.log('route.params = ' , route.params );
         return this.wikiPagesService.getWikiTableByPage(+route.paramMap.get('id'));
     }
 }

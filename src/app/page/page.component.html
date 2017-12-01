@@ -39,7 +39,7 @@
     </div>
     <div class="col-md-8">
       <h1 *ngIf="page" >{{page.name}}</h1>
-      <markdown *ngIf="page" [data]="page.pageContent"></markdown>
+      <html-outlet [html]="value"></html-outlet>
     </div>
     <div *ngIf="user"   class="col-md-2">
       <div class="panel panel-info">

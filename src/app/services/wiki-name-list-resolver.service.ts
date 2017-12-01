@@ -11,15 +11,9 @@ import { IOData } from '../types/odata.interface'
 import { WikiPagesService } from '../services/wiki-pages.service';
 
 @Injectable()
-export class WikiPageResolverService  implements Resolve<IPage>  {
-
-  constructor(private wikiPagesService: WikiPagesService ) { }
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPage> {
-    let pageId = 0;
-    if (route.paramMap.has('id')){
-      pageId =  +route.paramMap.get('id');
-    }
-    return  this.wikiPagesService.getWikiPage(pageId);
+export class WikiNameListResolverService  implements Resolve<INvp[]>  {
+    constructor(private wikiPagesService: WikiPagesService ) { }
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<INvp[]> {
+        return this.wikiPagesService.getWikiNameBindingList();
     }
 }

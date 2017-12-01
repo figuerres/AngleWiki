@@ -1,13 +1,16 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
+
+import { Component, OnInit , OnDestroy } from '@angular/core';
 import { MarkdownComponent, MarkdownService } from 'angular2-markdown';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ISubscription} from 'rxjs/Subscription'
-import {Subscription} from 'rxjs';
+import { ISubscription } from 'rxjs/Subscription'
+import { Subscription } from 'rxjs';
 
 import { IWiki , IPage , ITag,IPageSummary, IWikiToc  }  from '../types/Wiki-Interfaces';
 import { WikiPagesService } from '../services/wiki-pages.service';
 import { AdlGlobalUser   } from '../shared/adl-global-user.service';
 import { User } from 'oidc-client';
+
+import { HtmlOutlet } from '../shared/adl-html-outlet.directive';
 
 @Component({
   selector: 'app-page',
@@ -16,8 +19,6 @@ import { User } from 'oidc-client';
 })
 export class PageComponent implements OnInit {
 
-   //public textData = '## Markdown content data';
-   //public Title = 'Markdown content data';
    public pageList: IPageSummary[];
 
    public page : IPage;
@@ -32,8 +33,9 @@ export class PageComponent implements OnInit {
     children: [ ]
    };
 
-   public nodes = [{}];
+   public value: string;
 
+   public nodes = [{}];
 
   constructor( 
     private router: Router,  
@@ -46,18 +48,21 @@ export class PageComponent implements OnInit {
     this.mark.renderer.link = (href: string,  title: string,  text: string) => {
       if( href.startsWith("~")){
         let u_str = href.replace("~","");
-      return `<a _ngcontent-c4="" routerlinkactive="active" ng-reflect-router-link="${u_str}" ng-reflect-router-link-active="active" href="${u_str}">${text}</a>`;
-    }else{
-      return `<a href="${href}">${text}</a>`;      
-    }
+        //
+        //   <a [routerLink]="['/']"              routerLinkActive="active">Home</a> 
+        //
+        return `<a routerLink="${u_str}" >${text}</a>`;
+      }else{
+        return `<a href="${href}">${text}</a>`;      
+      }
     };
   }
 
   onPageResolved( wPage : IPage ,  wWikiToc: IWikiToc ){
-   // console.log("onPageResolved( wPage : IPage  ): ", wPage);
     this.page = wPage;
     this.wikiToc =  wWikiToc;
     this.nodes = this.wikiToc.children;
+    this.value = this.mark.compile( this.page.pageContent);
   }
 
   ngOnInit( ) {
@@ -71,19 +76,6 @@ export class PageComponent implements OnInit {
       this.onPageResolved(data['page'],data['toc']);
     });
 
-    //   this.route.params.forEach(params =>{
-    //   let id = params["id"];
-    //   this.busy=  this.wikiPagesService.getWikiPage(id).subscribe(page =>{
-    //   //  console.log(' page = ' ,page);
-    //   //  console.log(' content = ' ,page.pageContent);
-    //     this.page = page;
-    //     this.wikiPagesService.getWikiTable(page.wikiId).subscribe(wToc =>{
-    //     //  console.log(' wiki Toc = ' ,wToc);
-    //       this.wikiToc = wToc;
-    //       this.nodes = this.wikiToc.children;
-    //     });
-    //   });
-    // });
   }
 
   editPage(){

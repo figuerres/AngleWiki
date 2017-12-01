@@ -7,6 +7,8 @@ import {HttpClient  , HttpResponse , HttpRequest, HttpHeaders  } from '@angular/
 
 import { Observable } from 'rxjs/Rx';
 
+import { of } from 'rxjs/observable/of';
+
 import {IWiki , IPage , ITag,IPageSummary , IWikiName , IWikiToc  , IPageEdit,INvp, INNvp }  from '../types/Wiki-Interfaces';
 import { IOData } from '../types/odata.interface'
 //import { AdlLoggerService } from '../shared/adl-logger.service';
@@ -104,9 +106,33 @@ export class WikiPagesService {
   }
 
   public  getWikiPage(pageId: number): Observable<IPage> {
+    if (pageId === 0) {
+      return of(this.newWikiPage());
+    }
     let url = this.configService.Settings.apiUrl + 'Wiki/WikiPage/' + pageId  ;
     return this.http.get<IPage>(url);
   }
+
+
+  private newWikiPage():IPage {
+   return {  
+      "id": 0,
+      "wikiId": 0,
+      "parentPageId": null,
+      "name": "",
+      "pageContent": "",
+      "createdBy": 0,
+      "createdDate": null,
+      "whoChanged":0,
+      "lastChanged": null,
+      "rowVersion": null,
+      "recDelete": false,
+      "order":0,
+      "rolesJSON": null
+    };
+  }
+
+
 
   public addWikiPage( page:IPage ): Observable<IPage>   {
     let url = this.configService.Settings.odataApiUrl  + 'Pages' ;

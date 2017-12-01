@@ -20,6 +20,8 @@ import { WikiComponent } from './wiki/wiki.component';
 import { WikiPageResolverService  } from './services/wiki-page-resolver.service';
 import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
 
+import { WikiNameListResolverService  } from './services/wiki-name-list-resolver.service';
+
 export const appRoutes: Routes = [
             {
                 path: '',
@@ -58,11 +60,19 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'wikipage/add',
+                resolve: { 
+                    page: WikiPageResolverService,
+                    nameList: WikiNameListResolverService
+                 },                
                 component: EditPageComponent,
                 canActivate:[AuthGuardService],
             },
             {
                 path: 'wikipage/edit/:id/:title',
+                resolve: { 
+                    page: WikiPageResolverService,
+                    nameList: WikiNameListResolverService
+                 },
                 component: EditPageComponent,
                 canActivate:[AuthGuardService],
             },

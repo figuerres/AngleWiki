@@ -31,9 +31,9 @@
           </div>
         <div class="form-group">
             <label for="content">Page Content</label>
-          <textarea rows="20"  id="content"
+          <textarea rows="20"  id="content" 
           [(ngModel)]="page.pageContent"  
-          name="pageContent" #pageContent="ngModel"  
+          name="pageContent" #pageContent="ngModel"  (ngModelChange)="markdownChange($event)"
            type="text" required ></textarea>
        </div>
        <div class="form-group">
@@ -48,7 +48,6 @@
           </select>
        </div>
 
-
           <button type="submit" class="btn btn-success" [disabled]="!newPageForm.form.valid">Submit</button>
           <button type="button" class="btn btn-default" (click)="newPage(); newPageForm.reset()">New Page</button>
 </form>
@@ -57,7 +56,7 @@
           <div  class="panel panel-info">
               <div class="panel-heading">Preview:</div>
               <div class="panel-body">
-          <markdown *ngIf='page' [data]="page.pageContent"></markdown>
+                <html-outlet *ngIf='value'  [html]="value"></html-outlet>
               </div>
             </div>
       </div>

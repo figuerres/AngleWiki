@@ -50,6 +50,9 @@ import { AdlGlobalUser   } from './shared/adl-global-user.service';
 
 import { WikiPageResolverService  } from './services/wiki-page-resolver.service';
 import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
+import { WikiNameListResolverService  } from './services/wiki-name-list-resolver.service';
+
+import { HtmlOutlet } from './shared/adl-html-outlet.directive';
 
 //
 //  RouterModule.forRoot(appRoutes, { enableTracing: true }),
@@ -69,7 +72,8 @@ import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
     HomeComponent,
     PageComponent,
     WikiListComponent,
-    WikiTocComponent
+    WikiTocComponent,
+      HtmlOutlet,
   
   ],
   imports: [
@@ -78,7 +82,7 @@ import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-   
+   // HtmlOutlet,
     AccordionModule.forRoot(),
     TypeaheadModule.forRoot(),
     AlertModule.forRoot(),
@@ -96,6 +100,7 @@ import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
     MarkdownService,
     WikiPageResolverService,
     WikiTocResolverService,
+    WikiNameListResolverService,
     WikiPagesService,
     WikiFilesService,
     {
