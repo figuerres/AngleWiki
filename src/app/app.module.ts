@@ -52,6 +52,8 @@ import { WikiPageResolverService  } from './services/wiki-page-resolver.service'
 import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
 import { WikiNameListResolverService  } from './services/wiki-name-list-resolver.service';
 
+import { WikiHomeNameListResolverService  } from './services/wiki-home-name-list-resolver.service';
+
 import { HtmlOutlet } from './shared/adl-html-outlet.directive';
 
 //
@@ -101,6 +103,7 @@ import { HtmlOutlet } from './shared/adl-html-outlet.directive';
     WikiPageResolverService,
     WikiTocResolverService,
     WikiNameListResolverService,
+    WikiHomeNameListResolverService,
     WikiPagesService,
     WikiFilesService,
     {

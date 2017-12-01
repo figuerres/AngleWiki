@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { IWiki , IPage , ITag,IPageSummary , IWikiName,INvp, INNvp }  from '../types/Wiki-Interfaces';
-import { WikiPagesService } from '../services/wiki-pages.service';
+
 import {Subscription} from 'rxjs';
 
 
@@ -17,22 +17,30 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private route: ActivatedRoute,
-   private wikiPagesService:  WikiPagesService
+    private route: ActivatedRoute
    ) { }
 
    public pageTitle = '';
    public wikiList: INNvp[];
-   busy: Subscription;
+
+
+
+   onListResolved( wList :  INNvp[] ){
+    if(wList.length==1){
+      this.router.navigate(['wiki/page/',  wList[0].id,  wList[0].linkName] );
+    }else{
+      this.pageTitle = 'Wiki List';
+      this.wikiList = wList;
+    }
+  }
+
+
 
   ngOnInit() {
-      this.busy=  this.wikiPagesService.getWikiNameList().subscribe(w =>{
-        if( w.length==1){
-           this.router.navigate(['wiki/page/', w[0].id, w[0].linkName] );
-         }else{
-           this.pageTitle = 'Wiki List';
-           this.wikiList = w;
-         }
-      });
+
+    this.route.data.subscribe(data => {
+      this.onListResolved(data['wikiList']);
+    });
+
   }
 }

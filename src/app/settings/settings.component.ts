@@ -28,7 +28,7 @@ export class SettingsComponent implements OnInit {
  
   public pagesList: INvp[];
   private user: User;
-  busy: Subscription;
+
   private entryPageId: number;
 
 private wiki : IWiki ;
@@ -56,7 +56,7 @@ private wiki : IWiki ;
       this.user = u;
     });
 
-  this.busy=    this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
+   this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
       console.log(' wiki = ' ,w);
      this.wikiList = w;
      this.newWiki();
@@ -78,7 +78,7 @@ private wiki : IWiki ;
   }
 
   onSubmit(){
-    this.busy=  this. wikiPagesService.addWiki(this.wiki).subscribe(p=>{
+     this. wikiPagesService.addWiki(this.wiki).subscribe(p=>{
         this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
         console.log(' wiki = ' ,w);
        this.wikiList = w;

@@ -18,17 +18,26 @@ import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
 import { WikiComponent } from './wiki/wiki.component';
 
 import { WikiPageResolverService  } from './services/wiki-page-resolver.service';
+
 import { WikiTocResolverService  } from './services/wiki-toc-resolver.service';
 
 import { WikiNameListResolverService  } from './services/wiki-name-list-resolver.service';
 
+import { WikiHomeNameListResolverService  } from './services/wiki-home-name-list-resolver.service';
+
 export const appRoutes: Routes = [
             {
                 path: '',
+                resolve: { 
+                    wikiList: WikiHomeNameListResolverService
+                 },
                 component: HomeComponent
             },
             {
                 path: 'home',
+                resolve: { 
+                    wikiList: WikiHomeNameListResolverService
+                 },                
                 component: HomeComponent,
                 canActivate:[AuthGuardService],
             },

@@ -29,7 +29,7 @@ export class WikiComponent implements OnInit {
    public wiki: IWiki;
    public wikiList: INNvp[];
    public pageList: IPageSummary[];
-   busy: Subscription;
+ 
   ngOnInit() {
 
     var wikiId : number;
@@ -42,7 +42,7 @@ export class WikiComponent implements OnInit {
       //
       console.log(' has param = ' , wikiId);
 
-      this.busy=   this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
+     this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
             console.log(' wiki = ' ,w);
             this.pageTitle = w.name;
             this.wiki = w;
@@ -57,7 +57,7 @@ export class WikiComponent implements OnInit {
       // no id then list the wiki's that are avilible
       //
       console.log('no id get list ' );
-      this.busy=    this.wikiPagesService.getWikiNameList().subscribe(w =>{
+       this.wikiPagesService.getWikiNameList().subscribe(w =>{
         console.log(' wiki = ' ,w);
        this.pageTitle = 'Wiki List';
        this.wikiList = w;

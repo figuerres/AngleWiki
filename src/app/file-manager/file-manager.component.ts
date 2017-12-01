@@ -51,7 +51,7 @@ private pageData : IPageData = {
   private userSubscription : ISubscription;
   public wikiList: INvp[];
   private currentWikiId: number = 0;
-  busy: Subscription;
+
 
   private user: User;
 
@@ -76,7 +76,7 @@ private pageData : IPageData = {
       this.user = u;
     });
 
-    this.busy=    this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
+     this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
       console.log(' wiki = ' ,w);
      this.wikiList = w;
     });
@@ -92,7 +92,7 @@ private pageData : IPageData = {
       //   this.WikiFiles = data;
       // });
 
-      this.busy=   this.FilesService.GetPagedFileList(this.currentWikiId,0,10).subscribe (data => {
+      this.FilesService.GetPagedFileList(this.currentWikiId,0,10).subscribe (data => {
         console.log(" data          = ",  data          );
         console.log(" data.context  = ",  data["@odata.context"]  );
         console.log(" data.count    = ",  data["@odata.count"]    );
@@ -116,7 +116,7 @@ private pageData : IPageData = {
   pageClick( block: number, page: number   ){
     console.log(" pageClick block = ", block );
     console.log(" page = ", page);
-    this.busy=   this.FilesService.GetPagedFileList(this.currentWikiId,page,this.pageData.pageSize).subscribe (data => {
+     this.FilesService.GetPagedFileList(this.currentWikiId,page,this.pageData.pageSize).subscribe (data => {
       console.log(" data          = ",  data          );
       console.log(" data.context  = ",  data["@odata.context"]  );
       console.log(" data.count    = ",  data["@odata.count"]    );
@@ -138,7 +138,7 @@ private pageData : IPageData = {
       console.log(" this.pageData.blocks[block].pages[0] = ", this.pageData.blocks[block].pages[0] );
       //  console.log(" Page Data = ", this.pageData)
       //  console.log(" Page Data = ", this.pageData)
-      this.busy=   this.FilesService.GetPagedFileList(this.currentWikiId,this.pageData.blocks[block].pages[0],this.pageData.pageSize).subscribe (data => {
+     this.FilesService.GetPagedFileList(this.currentWikiId,this.pageData.blocks[block].pages[0],this.pageData.pageSize).subscribe (data => {
         console.log(" data          = ",  data          );
         console.log(" data.context  = ",  data["@odata.context"]  );  
         console.log(" data.count    = ",  data["@odata.count"]    );

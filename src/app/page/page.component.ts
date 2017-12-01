@@ -25,7 +25,7 @@ export class PageComponent implements OnInit {
    private userLoggedInSubscription : ISubscription;
    private userSubscription : ISubscription;
    private user: User;
-   busy: Subscription;
+ 
    public wikiToc: IWikiToc = {
     id: 0,
   order: 0,

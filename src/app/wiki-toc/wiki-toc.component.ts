@@ -26,7 +26,7 @@ export class WikiTocComponent implements OnInit {
    public wiki: IWiki;
    public wikiList: IWikiName[];
    public pageList: IPageSummary[];
-   busy: Subscription;
+ 
 
   ngOnInit() {
 
@@ -40,7 +40,7 @@ export class WikiTocComponent implements OnInit {
       //
       console.log(' has param = ' , wikiId);
 
-      this.busy=    this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
+        this.wikiPagesService.getWiki(wikiId).subscribe(w =>{
             console.log(' wiki = ' ,w);
             this.pageTitle = w.name;
             this.wiki = w;

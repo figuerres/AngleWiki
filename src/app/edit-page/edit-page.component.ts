@@ -28,7 +28,7 @@ export class EditPageComponent implements OnInit {
   public page : IPage;
   public pagesList: INvp[];
   private user: User;
-  busy: Subscription;
+
   private entryPageId: number;
   public value: string;
 
@@ -84,34 +84,6 @@ export class EditPageComponent implements OnInit {
       this.onPageResolved(data['page'],data['nameList'] );
     });
 
-
-
-    // this.route.params.subscribe(p => {
-    //   if (p['id']) {
-    //     let id = +p["id"];
-    //     this.entryPageId = id;
-    //     this.busy=    this.wikiPagesService.getWikiPage(id).subscribe(p =>{
-    //       this.page = p;
-    //       console.log(' page = ' ,this.page);
-    //       console.log(' content = ' ,this.page.pageContent);
-    //       this.wikiPagesService.getPageNameBindingList(this.page.wikiId).subscribe(wPages =>{
-    //         console.log(' wiki pages = ' ,wPages);
-    //         this.pagesList  = wPages;
-    //       });
-    //       this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
-    //         console.log(' wiki = ' ,w);
-    //         this.wikiList = w;
-    //       });
-    //     });    
-    //   } else {
-    //     this.busy=   this.wikiPagesService.getWikiNameBindingList().subscribe(w =>{
-    //       this.newPage();
-    //       console.log(' wiki = ' ,w);
-    //       this.wikiList = w;
-    //     });
-    //   }
-    // });
- 
   }
 
   markdownChange( event:Event ){

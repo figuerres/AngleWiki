@@ -22,13 +22,13 @@ export class WikiListComponent implements OnInit {
    ) { }
    public pageTitle = '';
    public wikiList: INNvp[];
-   busy: Subscription;
+  
   ngOnInit() {
       //
       // no id then list the wiki's that are avilible
       //
       console.log('no id get list ' );
-      this.busy=  this.wikiPagesService.getWikiNameList().subscribe(w =>{
+      this.wikiPagesService.getWikiNameList().subscribe(w =>{
         console.log(' wiki = ' ,w);
        this.pageTitle = 'Wiki List';
        this.wikiList = w;
