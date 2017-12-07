@@ -124,6 +124,7 @@ export class EditPageComponent implements OnInit {
       "parentPageId": null,
       "name": "",
       "pageContent": "",
+      "pageContentHtml": "",
       "createdBy": 0,
       "createdDate": null,
       "whoChanged":0,

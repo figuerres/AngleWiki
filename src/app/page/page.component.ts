@@ -62,7 +62,14 @@ export class PageComponent implements OnInit {
     this.page = wPage;
     this.wikiToc =  wWikiToc;
     this.nodes = this.wikiToc.children;
+
     this.value = this.mark.compile( this.page.pageContent);
+
+    // this.page.pageContentHtml =  this.mark.compile( this.page.pageContent);
+    // console.log("page html: ",this.page.pageContentHtml);
+    // this. wikiPagesService.updateWikiPage(this.page).subscribe(p=>{
+    //   console.log("page updated: ",this.page);
+    // });
   }
 
   ngOnInit( ) {

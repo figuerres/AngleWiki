@@ -38,7 +38,7 @@ export class AppComponent implements OnInit  {
        // this.loading = true;
        if(!this.busy){
          this.busy=   this.router.events.subscribe((routerEvent: Event) => {
-           console.log(" in busy routerEvent: Event = ", routerEvent  );
+         //  console.log(" in busy routerEvent: Event = ", routerEvent  );
           });
        }
     }
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit  {
         routerEvent instanceof NavigationError) {
           if (this.busy ){
             //  this.loading = false;
-            console.log(" unsubscribe now routerEvent: Event = ", routerEvent  );
+            // console.log(" unsubscribe now routerEvent: Event = ", routerEvent  );
             this.busy.unsubscribe();
             this.busy = null;
         }
@@ -62,8 +62,8 @@ export class AppComponent implements OnInit  {
     this.loadedUserSub = this.authService.userLoadededEvent
       .subscribe(user => {
         this.user = user;
-        console.log(" AppComponent  user loaded event fired ");
-        console.log(this.user);
+       // console.log(" AppComponent  user loaded event fired ");
+      //  console.log(this.user);
       });
     /*
      * handle user unloaded event after user has logged out
@@ -71,7 +71,7 @@ export class AppComponent implements OnInit  {
      */
     this.unloadedUserSub = this.authService.userUnLoadededEvent
       .subscribe(x => { 
-        console.log(" AppComponent  user un loaded event fired ");
+       // console.log(" AppComponent  user un loaded event fired ");
         this.user = null;
       });
   }

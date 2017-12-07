@@ -9,13 +9,13 @@ import { AuthGuardService   } from './shared/adl-global-auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { CategoriesComponent } from './categories/categories.component';
-import { PagesComponent } from './pages/pages.component';
+
 import { SettingsComponent } from './settings/settings.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { PageComponent } from './page/page.component';
 import { WikiListComponent } from './wiki-list/wiki-list.component';
-import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
-import { WikiComponent } from './wiki/wiki.component';
+
+
 
 import { WikiPageResolverService  } from './services/wiki-page-resolver.service';
 
@@ -50,14 +50,6 @@ export const appRoutes: Routes = [
                 component: WikiListComponent
             },
 
-            {
-                path: 'wiki/:wikiId/:wikiTitle', 
-                component: WikiTocComponent  
-            },
-            {
-                path: 'wikitoc/:wikiId', 
-                component: PagesComponent  
-            },
 
             {
                 path: 'wiki/page/:id/:title',

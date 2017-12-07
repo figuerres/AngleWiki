@@ -121,6 +121,7 @@ export class WikiPagesService {
       "parentPageId": null,
       "name": "",
       "pageContent": "",
+      "pageContentHtml": "",
       "createdBy": 0,
       "createdDate": null,
       "whoChanged":0,
@@ -141,6 +142,7 @@ export class WikiPagesService {
       "parentPageId": page.parentPageId,
         "name":page.name    ,
         "pageContent":  page.pageContent,
+        "pageContentHtml":  page.pageContentHtml,
         "order":page.order,
         "rolesJSON": page.rolesJSON
     };

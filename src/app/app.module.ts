@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// import { HttpModule } from '@angular/http';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -14,13 +13,11 @@ import { ErrorHandler } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-//  import { Ng2BootstrapModule } from 'ngx-bootstrap';
-
 import { TypeaheadModule, ProgressbarModule, AlertModule, AccordionModule } from 'ngx-bootstrap';
 import { TabsModule } from 'ngx-bootstrap';
 import { MarkdownModule, MarkdownService } from 'angular2-markdown';
 import { TreeModule } from 'angular-tree-component';
-import {BusyModule} from 'angular2-busy';
+import { BusyModule } from 'angular2-busy';
 
 import { WikiPagesService } from './services/wiki-pages.service';
 import { WikiFilesService } from './services/wiki-files.service';
@@ -31,14 +28,14 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { CategoriesComponent } from './categories/categories.component';
-import { PagesComponent } from './pages/pages.component';
+
 import { SettingsComponent } from './settings/settings.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { HomeComponent } from './home/home.component';
 import { PageComponent } from './page/page.component';
 
 import { WikiListComponent } from './wiki-list/wiki-list.component';
-import { WikiTocComponent } from './wiki-toc/wiki-toc.component';
+
 
 import { AdlGlobalInterceptor } from './shared/adl-global-interceptor.service';
 import { ngfModule  } from './shared/ngf/ngf.module'
@@ -68,13 +65,12 @@ import { HtmlOutlet } from './shared/adl-html-outlet.directive';
     UnauthorizedComponent,
     FileManagerComponent,
     CategoriesComponent,
-    PagesComponent,
+ 
     SettingsComponent,
     EditPageComponent,
     HomeComponent,
     PageComponent,
     WikiListComponent,
-    WikiTocComponent,
       HtmlOutlet,
   
   ],
@@ -84,7 +80,6 @@ import { HtmlOutlet } from './shared/adl-html-outlet.directive';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-   // HtmlOutlet,
     AccordionModule.forRoot(),
     TypeaheadModule.forRoot(),
     AlertModule.forRoot(),

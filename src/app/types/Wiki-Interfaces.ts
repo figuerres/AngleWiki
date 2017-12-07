@@ -27,6 +27,7 @@ import { Observable } from 'rxjs/Rx';
         name: string;
         rolesJSON?: any;
         pageContent: string;
+        pageContentHtml: string;
     }
 
     export interface IPageEdit {
@@ -35,6 +36,7 @@ import { Observable } from 'rxjs/Rx';
         parentPageId?: any;
         name: string;
         pageContent: string;
+        pageContentHtml: string;
     }
 
     export interface ITag {

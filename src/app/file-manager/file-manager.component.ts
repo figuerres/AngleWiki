@@ -214,7 +214,7 @@ pagerCompute( ipageSize:number,iblockSize:number, irowCount:number ){
           this.uploadProgress = 0;
           this.files = new Array<File>();
           console.log('File(s) are completely uploaded!');
-          this.busy=   this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
+           this.FilesService.GetFileList(this.currentWikiId).subscribe (data => {
             this.WikiFiles = data;
             });          
         } else {
