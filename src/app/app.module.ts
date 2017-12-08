@@ -52,10 +52,8 @@ import { WikiNameListResolverService  } from './services/wiki-name-list-resolver
 import { WikiHomeNameListResolverService  } from './services/wiki-home-name-list-resolver.service';
 
 import { HtmlOutlet } from './shared/adl-html-outlet.directive';
+import { Ckedit5 } from './shared/ckedit/ckedit5.directive';
 
-//
-//  RouterModule.forRoot(appRoutes, { enableTracing: true }),
-//
 
 @NgModule({
   declarations: [
@@ -65,14 +63,14 @@ import { HtmlOutlet } from './shared/adl-html-outlet.directive';
     UnauthorizedComponent,
     FileManagerComponent,
     CategoriesComponent,
- 
     SettingsComponent,
     EditPageComponent,
     HomeComponent,
     PageComponent,
     WikiListComponent,
-      HtmlOutlet,
-  
+    HtmlOutlet,
+    Ckedit5,
+
   ],
   imports: [
     BrowserModule,
