@@ -21,7 +21,6 @@
     "@angular/platform-browser": "^5.0.3",
     "@angular/platform-browser-dynamic": "^5.0.3",
     "@angular/router": "^5.0.3",
-    "@ckeditor/ckeditor5-build-classic": "^1.0.0-alpha.2",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.2",
     "angular-tree-component": "^6.0.0",
     "angular2-busy": "^2.0.4",

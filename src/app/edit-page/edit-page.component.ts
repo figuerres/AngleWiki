@@ -14,7 +14,7 @@ import { AdlGlobalUser   } from '../shared/adl-global-user.service';
 import { User } from 'oidc-client';
 
 import { HtmlOutlet } from '../shared/adl-html-outlet.directive';
-import { Ckedit5 } from '../shared/ckedit/ckedit5.directive';
+
 
 @Component({
   selector: 'app-edit-page',

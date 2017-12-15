@@ -52,7 +52,7 @@ import { WikiNameListResolverService  } from './services/wiki-name-list-resolver
 import { WikiHomeNameListResolverService  } from './services/wiki-home-name-list-resolver.service';
 
 import { HtmlOutlet } from './shared/adl-html-outlet.directive';
-import { Ckedit5 } from './shared/ckedit/ckedit5.directive';
+
 
 
 @NgModule({
@@ -69,8 +69,6 @@ import { Ckedit5 } from './shared/ckedit/ckedit5.directive';
     PageComponent,
     WikiListComponent,
     HtmlOutlet,
-    Ckedit5,
-
   ],
   imports: [
     BrowserModule,
